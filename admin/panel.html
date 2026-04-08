@@ -1,0 +1,2351 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Admin — A. Pelizzeri</title>
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #fafaf8;
+            --surface: #ffffff;
+            --border: #e4e2de;
+            --text: #1a1a1a;
+            --muted: #999;
+            --accent: #1a1a1a;
+            --green: #2e7d52;
+            --red: #c0392b;
+            --blue: #2c5282;
+            --yellow: #b8860b;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 13px;
+            min-height: 100vh;
+        }
+
+        /* LOGIN */
+        #loginScreen {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            transition: opacity 0.4s;
+        }
+
+        #loginScreen.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .login-card {
+            width: 370px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 44px 40px 38px;
+            text-align: center;
+        }
+
+        .login-logo {
+            font-family: Georgia, serif;
+            font-size: 18px;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .login-sub {
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 34px;
+        }
+
+        .lock-svg {
+            width: 38px;
+            height: 38px;
+            margin: 0 auto 28px;
+            opacity: 0.25;
+        }
+
+        .fg {
+            margin-bottom: 13px;
+            text-align: left;
+        }
+
+        .fg label {
+            display: block;
+            font-size: 10px;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 7px;
+        }
+
+        .fg input {
+            width: 100%;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 11px 14px;
+            color: #1a1a1a;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .fg input:focus {
+            border-color: #999;
+        }
+
+        .pw-w {
+            position: relative;
+        }
+
+        .pw-w input {
+            padding-right: 40px;
+        }
+
+        .pw-tog {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--muted);
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .pw-tog:hover {
+            color: #1a1a1a;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            background: #1a1a1a;
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-weight: 600;
+        }
+
+        .login-btn:hover {
+            background: #333;
+        }
+
+        .login-btn:disabled {
+            background: #ddd;
+            color: #aaa;
+            cursor: not-allowed;
+        }
+
+        .login-err {
+            margin-top: 13px;
+            font-size: 12px;
+            color: var(--red);
+            min-height: 18px;
+        }
+
+        /* DASHBOARD */
+        #dashboard {
+            display: none;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 26px;
+            height: 52px;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface);
+            flex-shrink: 0;
+        }
+
+        .hdr-logo {
+            font-family: Georgia, serif;
+            font-size: 14px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: #1a1a1a;
+        }
+
+        .hdr-badge {
+            font-size: 9px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            padding: 3px 9px;
+            border-radius: 20px;
+            color: var(--muted);
+            margin-left: 14px;
+        }
+
+        .hdr-r {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hdr-a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            transition: color 0.2s;
+        }
+
+        .hdr-a:hover {
+            color: #1a1a1a;
+        }
+
+        .out-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            padding: 5px 14px;
+            border-radius: 4px;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .out-btn:hover {
+            border-color: var(--red);
+            color: var(--red);
+        }
+
+        .shell {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 185px;
+            flex-shrink: 0;
+            border-right: 1px solid var(--border);
+            padding: 18px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            background: var(--surface);
+        }
+
+        .nav-lbl {
+            font-size: 9px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: #bbb;
+            padding: 14px 20px 5px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            color: var(--muted);
+            transition: all 0.15s;
+            border-left: 2px solid transparent;
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .nav-item:hover {
+            color: var(--text);
+            background: rgba(0, 0, 0, 0.04);
+        }
+
+        .nav-item.active {
+            color: #1a1a1a;
+            border-left-color: #1a1a1a;
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-item svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
+
+        .nav-div {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 8px 0;
+        }
+
+        /* MAIN */
+        main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 28px 30px;
+        }
+
+        .tab {
+            display: none;
+        }
+
+        .tab.active {
+            display: block;
+        }
+
+        .pg-title {
+            font-family: Georgia, serif;
+            font-size: 20px;
+            font-weight: normal;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .pg-sub {
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+
+        /* UPLOAD ZONE */
+        .upload-zone {
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 38px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+            margin-bottom: 22px;
+        }
+
+        .upload-zone:hover,
+        .upload-zone.drag-over {
+            border-color: #999;
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .upload-zone input {
+            display: none;
+        }
+
+        .up-icon {
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        .upload-zone p {
+            color: var(--muted);
+            line-height: 1.9;
+            font-size: 12px;
+        }
+
+        .upload-zone strong {
+            color: var(--text);
+        }
+
+        .prog-wrap {
+            margin-bottom: 18px;
+            display: none;
+        }
+
+        .prog-bar {
+            height: 2px;
+            background: var(--border);
+            border-radius: 1px;
+            overflow: hidden;
+            margin-bottom: 7px;
+        }
+
+        .prog-fill {
+            height: 100%;
+            background: #1a1a1a;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .prog-text {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        /* IMAGE GRID */
+        .img-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .img-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .img-card img {
+            width: 100%;
+            height: 115px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .img-body {
+            padding: 8px 9px 10px;
+        }
+
+        .img-name {
+            font-size: 10px;
+            color: var(--muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 8px;
+        }
+
+        .img-btns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+        }
+
+        .mv-wrap {
+            position: relative;
+        }
+
+        .mv-drop {
+            display: none;
+            position: absolute;
+            bottom: calc(100% + 5px);
+            left: 0;
+            right: 0;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            z-index: 50;
+            overflow: hidden;
+        }
+
+        .mv-drop.open {
+            display: block;
+        }
+
+        .mv-opt {
+            padding: 7px 10px;
+            font-size: 9px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+
+        .mv-opt:hover {
+            background: #f0eeea;
+            color: #1a1a1a;
+        }
+
+        .img-full {
+            grid-column: 1/-1;
+        }
+
+        .img-empty {
+            grid-column: 1/-1;
+            text-align: center;
+            color: var(--muted);
+            padding: 50px 0;
+            font-size: 12px;
+        }
+
+        .xbtn {
+            padding: 5px;
+            font-size: 9px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--muted);
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.15s;
+            text-align: center;
+        }
+
+        .xbtn:hover {
+            color: #1a1a1a;
+            border-color: #999;
+        }
+
+        .xbtn.del:hover {
+            color: var(--red);
+            border-color: var(--red);
+        }
+
+        .xbtn.apply:hover {
+            color: var(--yellow);
+            border-color: var(--yellow);
+        }
+
+        .xbtn.copied {
+            color: var(--green);
+            border-color: var(--green);
+        }
+
+        .img-empty {
+            grid-column: 1/-1;
+            text-align: center;
+            color: var(--muted);
+            padding: 50px 0;
+            font-size: 12px;
+        }
+
+        /* MODAL */
+        .modal-ov {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.78);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+        }
+
+        .modal-bx {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            width: 680px;
+            max-width: 94vw;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-hd {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 20px 22px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-hd h3 {
+            font-family: Georgia, serif;
+            font-size: 16px;
+            font-weight: normal;
+            color: #1a1a1a;
+            margin-bottom: 3px;
+        }
+
+        .modal-hd p {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .modal-cls {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.15s;
+            flex-shrink: 0;
+        }
+
+        .modal-cls:hover {
+            border-color: var(--red);
+            color: var(--red);
+        }
+
+        .modal-bd {
+            padding: 18px 22px;
+            overflow-y: auto;
+        }
+
+        .modal-lbl {
+            font-size: 10px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 14px;
+        }
+
+        .modal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+            gap: 9px;
+        }
+
+        .m-img-item {
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .m-img-item:hover {
+            border-color: var(--yellow);
+        }
+
+        .m-img-item img {
+            width: 100%;
+            height: 96px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .m-img-src {
+            padding: 5px 7px;
+            font-size: 9px;
+            color: var(--muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .modal-empty {
+            color: var(--muted);
+            font-size: 12px;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        /* FILE EDITOR */
+        .file-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-bottom: 20px;
+        }
+
+        .f-pill {
+            padding: 7px 15px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--muted);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            letter-spacing: 0.05em;
+            transition: all 0.15s;
+        }
+
+        .f-pill:hover {
+            color: #1a1a1a;
+            border-color: #999;
+        }
+
+        .f-pill.active {
+            color: #1a1a1a;
+            border-color: #1a1a1a;
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .ed-wrap {
+            display: none;
+        }
+
+        .ed-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 14px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-bottom: none;
+            border-radius: 6px 6px 0 0;
+        }
+
+        .ed-fname {
+            font-family: monospace;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .ed-fname span {
+            color: #1a1a1a;
+        }
+
+        .ed-status {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .ed-status.sv {
+            color: var(--green);
+        }
+
+        .ed-status.er {
+            color: var(--red);
+        }
+
+        textarea.ced {
+            width: 100%;
+            height: 520px;
+            background: #f8f8f6;
+            color: #1a1a1a;
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            padding: 16px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 11.5px;
+            line-height: 1.65;
+            resize: vertical;
+            outline: none;
+            tab-size: 2;
+        }
+
+        textarea.ced:focus {
+            border-color: #999;
+        }
+
+        /* DEPLOY */
+        .dep-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 28px;
+            max-width: 660px;
+            margin-bottom: 18px;
+        }
+
+        .dep-card h2 {
+            font-family: Georgia, serif;
+            font-size: 18px;
+            font-weight: normal;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .dep-card p {
+            color: var(--muted);
+            line-height: 1.8;
+            margin-bottom: 18px;
+            font-size: 12px;
+        }
+
+        .live-url {
+            display: inline-block;
+            background: rgba(91, 156, 246, 0.08);
+            border: 1px solid rgba(91, 156, 246, 0.3);
+            border-radius: 4px;
+            padding: 7px 13px;
+            font-family: monospace;
+            font-size: 12px;
+            color: var(--blue);
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        .live-url:hover {
+            color: #1a1a1a;
+        }
+
+        .dep-btns {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .dep-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 14px;
+            font-size: 12px;
+            color: var(--muted);
+            min-height: 20px;
+        }
+
+        .spinner {
+            width: 13px;
+            height: 13px;
+            border: 2px solid var(--border);
+            border-top-color: #1a1a1a;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .log-box {
+            display: none;
+            background: #f4f3f0;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 13px 16px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 11px;
+            line-height: 1.7;
+            color: #888;
+            max-height: 360px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .log-box .ok {
+            color: var(--green);
+        }
+
+        .log-box .url {
+            color: var(--blue);
+        }
+
+        .log-box .err {
+            color: var(--red);
+        }
+
+        /* BUTTONS */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 18px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 10px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            transition: all 0.15s;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            border-color: #999;
+            color: #1a1a1a;
+        }
+
+        .btn.pr {
+            background: #1a1a1a;
+            border-color: #1a1a1a;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .btn.pr:hover {
+            background: #333;
+            border-color: #333;
+        }
+
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* TOAST */
+        .toast {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: #1a1a1a;
+            padding: 11px 18px;
+            border-radius: 6px;
+            font-size: 12px;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: all 0.25s;
+            z-index: 999;
+            max-width: 300px;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast.gt {
+            border-color: var(--green);
+        }
+
+        .toast.rt {
+            border-color: var(--red);
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+
+        /* ABOUT SLOTS */
+        .about-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .about-slot-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .asc-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .asc-hint {
+            font-size: 10px;
+            color: var(--muted);
+            font-weight: normal;
+        }
+
+        .asc-preview {
+            margin: 12px 0;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #f0eeea;
+            min-height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .asc-preview img {
+            width: 100%;
+            max-height: 240px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .asc-empty {
+            color: var(--muted);
+            font-size: 11px;
+            padding: 40px 0;
+        }
+
+        .asc-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .asc-fname {
+            font-size: 10px;
+            color: var(--muted);
+            margin-top: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* CONTENT EDITOR */
+        .cnt-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .cnt-group {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 18px 20px;
+        }
+
+        .cnt-heading {
+            font-family: Georgia, serif;
+            font-size: 15px;
+            font-weight: normal;
+            color: #1a1a1a;
+            margin-bottom: 14px;
+        }
+
+        .cnt-field {
+            margin-bottom: 12px;
+        }
+
+        .cnt-field label {
+            display: block;
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 5px;
+        }
+
+        .cnt-input {
+            width: 100%;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            padding: 9px 12px;
+            color: #1a1a1a;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .cnt-input:focus {
+            border-color: #999;
+        }
+
+        .cnt-textarea {
+            width: 100%;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            padding: 9px 12px;
+            color: #1a1a1a;
+            font-size: 13px;
+            outline: none;
+            resize: vertical;
+            line-height: 1.6;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .cnt-textarea:focus {
+            border-color: #999;
+        }
+
+        .exh-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .exh-row:last-child {
+            border-bottom: none;
+        }
+
+        .exh-year {
+            font-size: 12px;
+            color: var(--blue);
+            font-weight: 600;
+            min-width: 70px;
+        }
+
+        .exh-title {
+            flex: 1;
+            font-size: 12px;
+            color: var(--text);
+        }
+
+        .exh-del {
+            background: none;
+            border: none;
+            color: var(--muted);
+            cursor: pointer;
+            font-size: 14px;
+            padding: 2px 6px;
+            transition: color 0.15s;
+        }
+
+        .exh-del:hover {
+            color: var(--red);
+        }
+
+        /* LANG SWITCHER */
+        .admin-lang-sw { display:flex; align-items:center; gap:2px; margin-right:8px; }
+        .admin-lang-sw button { background:none; border:none; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); cursor:pointer; padding:2px 6px; border-radius:4px; transition:color 0.15s; }
+        .admin-lang-sw button.active { color:#1a1a1a; font-weight:700; }
+        .admin-lang-sw span { color:var(--border); font-size:10px; }
+    </style>
+</head>
+
+<body>
+
+    <!-- LOGIN SCREEN -->
+    <div id="loginScreen">
+        <div class="login-card">
+            <div class="login-logo">A. Pelizzeri</div>
+            <div class="login-sub">Admin Panel</div>
+            <svg class="lock-svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
+                <rect x="3" y="11" width="18" height="11" rx="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+            <div class="fg"><label>Username</label><input type="text" id="lUser" placeholder="antonio"
+                    autocomplete="username" /></div>
+            <div class="fg"><label>Password</label>
+                <div class="pw-w">
+                    <input type="password" id="lPass" placeholder="••••••••••••" autocomplete="current-password" />
+                    <button class="pw-tog" id="pwTog" type="button">👁</button>
+                </div>
+            </div>
+            <button class="login-btn" id="loginBtn">Login</button>
+            <div class="login-err" id="loginErr"></div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dashboard">
+        <header>
+            <div style="display:flex;align-items:center">
+                <span class="hdr-logo">A. Pelizzeri</span>
+                <span class="hdr-badge">Admin</span>
+            </div>
+            <div class="hdr-r">
+                <div class="admin-lang-sw">
+                    <button onclick="setAdminLang('it')" data-alang="it">IT</button>
+                    <span>|</span>
+                    <button onclick="setAdminLang('en')" data-alang="en">EN</button>
+                </div>
+                <button class="out-btn" id="logoutBtn">Logout</button>
+            </div>
+        </header>
+
+        <div class="shell">
+            <nav class="sidebar">
+                <div class="nav-lbl">Sezioni</div>
+                <div class="nav-item active" data-tab="work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5">
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <circle cx="8.5" cy="8.5" r="1.5" />
+                        <path d="m21 15-5-5L5 21" />
+                    </svg>Work</div>
+                <div class="nav-item" data-tab="installation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9,22 9,12 15,12 15,22" />
+                    </svg>Installation</div>
+                <div class="nav-item" data-tab="studio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5">
+                        <circle cx="12" cy="12" r="3" />
+                        <path
+                            d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" />
+                    </svg>Studio</div>
+                <div class="nav-item" data-tab="about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>About</div>
+                <div class="nav-item" data-tab="contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                        <polyline points="22,6 12,13 2,6" />
+                    </svg>Contact</div>
+                <hr class="nav-div" />
+                <div class="nav-lbl">Tools</div>
+                <div class="nav-item" data-tab="files"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14,2 14,8 20,8" />
+                    </svg>File Editor</div>
+                <div class="nav-item" data-tab="content"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5">
+                        <path d="M12 20h9" />
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                    </svg>Content</div>
+                <div class="nav-item" data-tab="deploy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                        <path d="m2 17 10 5 10-5" />
+                        <path d="m2 12 10 5 10-5" />
+                    </svg>Deploy</div>
+                <hr class="nav-div" />
+                <div class="nav-lbl">Account</div>
+                <div class="nav-item" data-tab="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>Password</div>
+            </nav>
+
+            <main>
+                <div class="tab active" id="tab-work">
+                    <h1 class="pg-title">Work</h1>
+                    <p class="pg-sub">Carica immagini per <strong>work.html</strong>. Le immagini caricate appariranno automaticamente sul sito.</p>
+                    <div class="upload-zone" id="uz-work"><input type="file" id="fi-work" accept="image/*" multiple />
+                        <div class="up-icon">🎨</div>
+                        <p><strong>Trascina qui le immagini</strong> o clicca per selezionare<br />(JPG, PNG, WebP — max 30MB)
+                        </p>
+                    </div>
+                    <div class="prog-wrap" id="pw-work">
+                        <div class="prog-bar">
+                            <div class="prog-fill" id="pf-work"></div>
+                        </div>
+                        <p class="prog-text" id="pt-work"></p>
+                    </div>
+                    <div class="img-grid" id="ig-work"></div>
+                </div>
+                <div class="tab" id="tab-installation">
+                    <h1 class="pg-title">Installation View</h1>
+                    <p class="pg-sub">Carica immagini per <strong>installation.html</strong>.</p>
+                    <div class="upload-zone" id="uz-installation"><input type="file" id="fi-installation"
+                            accept="image/*" multiple />
+                        <div class="up-icon">🏛</div>
+                        <p><strong>Trascina qui le immagini</strong> o clicca per selezionare</p>
+                    </div>
+                    <div class="prog-wrap" id="pw-installation">
+                        <div class="prog-bar">
+                            <div class="prog-fill" id="pf-installation"></div>
+                        </div>
+                        <p class="prog-text" id="pt-installation"></p>
+                    </div>
+                    <div class="img-grid" id="ig-installation"></div>
+                </div>
+                <div class="tab" id="tab-studio">
+                    <h1 class="pg-title">Studio</h1>
+                    <p class="pg-sub">Carica immagini per <strong>studio.html</strong>.</p>
+                    <div class="upload-zone" id="uz-studio"><input type="file" id="fi-studio" accept="image/*"
+                            multiple />
+                        <div class="up-icon">📐</div>
+                        <p><strong>Trascina qui le immagini</strong> o clicca per selezionare</p>
+                    </div>
+                    <div class="prog-wrap" id="pw-studio">
+                        <div class="prog-bar">
+                            <div class="prog-fill" id="pf-studio"></div>
+                        </div>
+                        <p class="prog-text" id="pt-studio"></p>
+                    </div>
+                    <div class="img-grid" id="ig-studio"></div>
+                </div>
+                <div class="tab" id="tab-about">
+                    <h1 class="pg-title">About</h1>
+                    <p class="pg-sub">Gestisci le 3 immagini della pagina About. Carica un'immagine per ogni slot.</p>
+                    <div class="about-slots">
+                        <div class="about-slot-card" id="asc-hero">
+                            <div class="asc-label">🖼 Hero Image <span class="asc-hint">(Full-width banner — page ke top
+                                    par · <strong>1800 × 800 px</strong>)</span></div>
+                            <div class="asc-preview" id="asp-hero">
+                                <div class="asc-empty">Nessuna immagine</div>
+                            </div>
+                            <div class="asc-actions">
+                                <label class="btn" style="cursor:pointer"><svg width="12" height="12"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                        <polyline points="17,8 12,3 7,8" />
+                                        <line x1="12" y1="3" x2="12" y2="15" />
+                                    </svg> Upload<input type="file" accept="image/*" style="display:none"
+                                        onchange="uploadAboutSlot('hero',this.files[0])" /></label>
+                                <button class="btn" style="color:var(--red);border-color:var(--red)"
+                                    onclick="deleteAboutSlot('hero')">Delete</button>
+                            </div>
+                        </div>
+                        <div class="about-slot-card" id="asc-portrait">
+                            <div class="asc-label">👤 Portrait <span class="asc-hint">(Right column — artist ki photo ·
+                                    <strong>550 × 550 px</strong>)</span></div>
+                            <div class="asc-preview" id="asp-portrait">
+                                <div class="asc-empty">Nessuna immagine</div>
+                            </div>
+                            <div class="asc-actions">
+                                <label class="btn" style="cursor:pointer"><svg width="12" height="12"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                        <polyline points="17,8 12,3 7,8" />
+                                        <line x1="12" y1="3" x2="12" y2="15" />
+                                    </svg> Upload<input type="file" accept="image/*" style="display:none"
+                                        onchange="uploadAboutSlot('portrait',this.files[0])" /></label>
+                                <button class="btn" style="color:var(--red);border-color:var(--red)"
+                                    onclick="deleteAboutSlot('portrait')">Delete</button>
+                            </div>
+                        </div>
+                        <div class="about-slot-card" id="asc-studio">
+                            <div class="asc-label">📐 Studio Image <span class="asc-hint">(Contact section — studio ki
+                                    photo · <strong>1200 × 800 px</strong>)</span></div>
+                            <div class="asc-preview" id="asp-studio">
+                                <div class="asc-empty">Nessuna immagine</div>
+                            </div>
+                            <div class="asc-actions">
+                                <label class="btn" style="cursor:pointer"><svg width="12" height="12"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                        <polyline points="17,8 12,3 7,8" />
+                                        <line x1="12" y1="3" x2="12" y2="15" />
+                                    </svg> Upload<input type="file" accept="image/*" style="display:none"
+                                        onchange="uploadAboutSlot('studio',this.files[0])" /></label>
+                                <button class="btn" style="color:var(--red);border-color:var(--red)"
+                                    onclick="deleteAboutSlot('studio')">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab" id="tab-contact">
+                    <h1 class="pg-title">Contact / Home</h1>
+                    <p class="pg-sub">Gestisci le 3 immagini principali della Home page (<strong>index.html</strong>).</p>
+                    <div class="about-slots">
+                        <div class="about-slot-card" id="csc-hero">
+                            <div class="asc-label">🖼 Hero Image <span class="asc-hint">(Full-width banner — page ke top
+                                    par · <strong>1800 × 1000 px</strong>)</span></div>
+                            <div class="asc-preview" id="csp-hero">
+                                <div class="asc-empty">Nessuna immagine</div>
+                            </div>
+                            <div class="asc-actions">
+                                <label class="btn" style="cursor:pointer"><svg width="12" height="12"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                        <polyline points="17,8 12,3 7,8" />
+                                        <line x1="12" y1="3" x2="12" y2="15" />
+                                    </svg> Upload<input type="file" accept="image/*" style="display:none"
+                                        onchange="uploadContactSlot('hero',this.files[0])" /></label>
+                                <button class="btn" style="color:var(--red);border-color:var(--red)"
+                                    onclick="deleteContactSlot('hero')">Delete</button>
+                            </div>
+                        </div>
+                        <div class="about-slot-card" id="csc-exhibition">
+                            <div class="asc-label">🎨 Exhibition <span class="asc-hint">(Latest exhibition — full-width
+                                    image · <strong>1800 × 900 px</strong>)</span></div>
+                            <div class="asc-preview" id="csp-exhibition">
+                                <div class="asc-empty">Nessuna immagine</div>
+                            </div>
+                            <div class="asc-actions">
+                                <label class="btn" style="cursor:pointer"><svg width="12" height="12"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                        <polyline points="17,8 12,3 7,8" />
+                                        <line x1="12" y1="3" x2="12" y2="15" />
+                                    </svg> Upload<input type="file" accept="image/*" style="display:none"
+                                        onchange="uploadContactSlot('exhibition',this.files[0])" /></label>
+                                <button class="btn" style="color:var(--red);border-color:var(--red)"
+                                    onclick="deleteContactSlot('exhibition')">Delete</button>
+                            </div>
+                        </div>
+                        <div class="about-slot-card" id="csc-studio">
+                            <div class="asc-label">📐 Studio / Contact <span class="asc-hint">(Contact section — studio
+                                    photo · <strong>1200 × 800 px</strong>)</span></div>
+                            <div class="asc-preview" id="csp-studio">
+                                <div class="asc-empty">Nessuna immagine</div>
+                            </div>
+                            <div class="asc-actions">
+                                <label class="btn" style="cursor:pointer"><svg width="12" height="12"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                        <polyline points="17,8 12,3 7,8" />
+                                        <line x1="12" y1="3" x2="12" y2="15" />
+                                    </svg> Upload<input type="file" accept="image/*" style="display:none"
+                                        onchange="uploadContactSlot('studio',this.files[0])" /></label>
+                                <button class="btn" style="color:var(--red);border-color:var(--red)"
+                                    onclick="deleteContactSlot('studio')">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab" id="tab-files">
+                    <h1 class="pg-title">File Editor</h1>
+                    <p class="pg-sub">Modifica qualsiasi file HTML direttamente e salva.</p>
+                    <div class="file-pills" id="filePills">Loading...</div>
+                    <div class="ed-wrap" id="edWrap">
+                        <div class="ed-bar">
+                            <span class="ed-fname">Editing: <span id="edName">—</span></span>
+                            <div style="display:flex;gap:10px;align-items:center">
+                                <span class="ed-status" id="edSt"></span>
+                                <button class="btn pr" id="saveBtn">Save</button>
+                            </div>
+                        </div>
+                        <textarea class="ced" id="codeEd" spellcheck="false"></textarea>
+                    </div>
+                </div>
+                <!-- CONTENT TAB -->
+                <div class="tab" id="tab-content">
+                    <h1 class="pg-title">Content Editor</h1>
+                    <p class="pg-sub">Modifica il contenuto testuale del sito. Dopo il salvataggio il sito si aggiorna automaticamente.</p>
+                    <div class="cnt-sections">
+                        <!-- HOME -->
+                        <div class="cnt-group">
+                            <h3 class="cnt-heading">🏠 Home Page</h3>
+                            <div class="cnt-field"><label>Hero Title</label><input type="text" data-key="hero_name"
+                                    class="cnt-input" /></div>
+                            <div class="cnt-field"><label>Hero Subtitle</label><input type="text"
+                                    data-key="hero_subtitle" class="cnt-input" /></div>
+                            <div class="cnt-field"><label>Intro Paragraph</label><textarea data-key="home_intro"
+                                    class="cnt-textarea" rows="4"></textarea></div>
+                            <div class="cnt-field"><label>Quote</label><input type="text" data-key="quote_text"
+                                    class="cnt-input" /></div>
+                            <div class="cnt-field"><label>Quote Author</label><input type="text" data-key="quote_author"
+                                    class="cnt-input" /></div>
+                        </div>
+                        <!-- EXHIBITION -->
+                        <div class="cnt-group">
+                            <h3 class="cnt-heading">🎨 Exhibition</h3>
+                            <div class="cnt-field"><label>Label</label><input type="text" data-key="exhibition_label"
+                                    class="cnt-input" /></div>
+                            <div class="cnt-field"><label>Title</label><input type="text" data-key="exhibition_title"
+                                    class="cnt-input" /></div>
+                            <div class="cnt-field"><label>Details (venue, dates)</label><textarea
+                                    data-key="exhibition_details" class="cnt-textarea" rows="2"></textarea></div>
+                        </div>
+                        <!-- ABOUT -->
+                        <div class="cnt-group">
+                            <h3 class="cnt-heading">👤 About Page</h3>
+                            <div class="cnt-field"><label>Name</label><input type="text" data-key="about_name"
+                                    class="cnt-input" /></div>
+                            <div class="cnt-field"><label>Bio Paragraph 1</label><textarea data-key="about_bio_1"
+                                    class="cnt-textarea" rows="4"></textarea></div>
+                            <div class="cnt-field"><label>Bio Paragraph 2</label><textarea data-key="about_bio_2"
+                                    class="cnt-textarea" rows="4"></textarea></div>
+                            <div class="cnt-field"><label>Bio Paragraph 3</label><textarea data-key="about_bio_3"
+                                    class="cnt-textarea" rows="4"></textarea></div>
+                        </div>
+                        <!-- STUDIO / CONTACT -->
+                        <div class="cnt-group">
+                            <h3 class="cnt-heading">📐 Studio / Contact</h3>
+                            <div class="cnt-field"><label>Studio Title</label><input type="text" data-key="studio_title"
+                                    class="cnt-input" /></div>
+                            <div class="cnt-field"><label>Location</label><input type="text" data-key="studio_location"
+                                    class="cnt-input" /></div>
+                            <div class="cnt-field"><label>CTA Text</label><input type="text" data-key="studio_cta"
+                                    class="cnt-input" /></div>
+                            <div class="cnt-field"><label>Email</label><input type="text" data-key="studio_email"
+                                    class="cnt-input" /></div>
+                        </div>
+                        <!-- FOOTER -->
+                        <div class="cnt-group">
+                            <h3 class="cnt-heading">📄 Footer</h3>
+                            <div class="cnt-field"><label>Tagline</label><input type="text" data-key="footer_tagline"
+                                    class="cnt-input" /></div>
+                        </div>
+                        <!-- PERCORSO -->
+                        <div class="cnt-group">
+                            <h3 class="cnt-heading">📋 Percorso Professionale</h3>
+                            <div id="exhList"></div>
+                            <div style="margin-top:10px;display:flex;gap:8px">
+                                <input type="text" id="exhYear" placeholder="Year" class="cnt-input"
+                                    style="width:100px" />
+                                <input type="text" id="exhTitle" placeholder="Title / Description" class="cnt-input"
+                                    style="flex:1" />
+                                <button class="btn" id="addExhBtn" onclick="addExhibition()">+ Add</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top:20px">
+                        <button class="btn pr" id="saveContentBtn" onclick="saveContent()">💾 Save All Content</button>
+                        <span class="ed-status" id="cntSt" style="margin-left:12px"></span>
+                    </div>
+                </div>
+                <div class="tab" id="tab-deploy">
+                    <h1 class="pg-title">Deploy</h1>
+                    <p class="pg-sub">Ek click mein website Netlify pe live ho jaayegi.</p>
+                    <div class="dep-card">
+                        <h2>Live Website</h2>
+                        <p>Aapki public website:</p>
+                        <a class="live-url" href="https://regno-di-blocchi.netlify.app"
+                            target="_blank">https://regno-di-blocchi.netlify.app ↗</a>
+                        <div class="dep-btns">
+                            <button class="btn pr" id="deployBtn">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                                    <path d="m2 17 10 5 10-5" />
+                                    <path d="m2 12 10 5 10-5" />
+                                </svg>
+                                Deploy Now
+                            </button>
+                            <a href="https://app.netlify.com/projects/regno-di-blocchi" target="_blank"
+                                class="btn">Netlify ↗</a>
+                        </div>
+                        <div class="dep-status">
+                            <div class="spinner" id="deplSpin"></div><span id="deplSt"></span>
+                        </div>
+                    </div>
+                    <pre class="log-box" id="logBox"></pre>
+                </div>
+
+                <div class="tab" id="tab-settings">
+                    <h1 class="pg-title">Password Change</h1>
+                    <p class="pg-sub">Cambia la tua password di accesso. La nuova password deve avere almeno 8 caratteri.</p>
+                    <div class="dep-card" style="max-width:440px">
+                        <h2>Password Badlo</h2>
+                        <div class="fg" style="margin-top:18px">
+                            <label>Purana Password</label>
+                            <div class="pw-w">
+                                <input type="password" id="cpOld" placeholder="Current password" autocomplete="current-password" />
+                                <button class="pw-tog" type="button" onclick="togglePw('cpOld', this)">👁</button>
+                            </div>
+                        </div>
+                        <div class="fg">
+                            <label>Naya Password</label>
+                            <div class="pw-w">
+                                <input type="password" id="cpNew" placeholder="New password (min 8 chars)" autocomplete="new-password" />
+                                <button class="pw-tog" type="button" onclick="togglePw('cpNew', this)">👁</button>
+                            </div>
+                        </div>
+                        <div class="fg">
+                            <label>Naya Password Confirm Karo</label>
+                            <div class="pw-w">
+                                <input type="password" id="cpConf" placeholder="Repeat new password" autocomplete="new-password" />
+                                <button class="pw-tog" type="button" onclick="togglePw('cpConf', this)">👁</button>
+                            </div>
+                        </div>
+                        <p id="cpErr" style="font-size:12px;color:var(--red);margin:8px 0 10px;min-height:18px"></p>
+                        <div class="dep-btns">
+                            <button class="btn pr" id="cpBtn" onclick="doChangePassword()">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                </svg>
+                                Password Update Karo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- APPLY MODAL -->
+    <div class="modal-ov" id="applyModal" style="display:none" onclick="if(event.target===this)closeModal()">
+        <div class="modal-bx">
+            <div class="modal-hd">
+                <div>
+                    <h3>Sostituisci Immagine nella Pagina</h3>
+                    <p>Seleziona l'immagine da sostituire — <strong id="modalFile"></strong></p>
+                </div>
+                <button class="modal-cls" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-bd">
+                <p class="modal-lbl">Immagini attualmente nella pagina:</p>
+                <div class="modal-grid" id="modalGrid"></div>
+                <div class="modal-empty" id="modalEmpty" style="display:none">Nessuna immagine trovata in questa pagina.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        let TOKEN = localStorage.getItem('ap_tk') || '';
+        let applySec = '', applyImg = '';
+
+        async function api(method, url, body) {
+            const opts = { method, headers: { 'X-Auth-Token': TOKEN } };
+            if (body instanceof FormData) { opts.body = body; }
+            else if (body) { opts.headers['Content-Type'] = 'application/json'; opts.body = JSON.stringify(body); }
+            return fetch(url, opts);
+        }
+
+        function toast(msg, type) {
+            const el = document.getElementById('toast');
+            el.textContent = msg;
+            el.className = 'toast show' + (type === 'ok' ? ' gt' : type === 'err' ? ' rt' : '');
+            clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('show'), 3200);
+        }
+
+        // ── AUTH ──────────────────────────────────────────────────────
+        // Accept token passed via URL (from website sidebar login)
+        (function () {
+            const urlTk = new URLSearchParams(location.search).get('ap_tk');
+            if (urlTk) { TOKEN = urlTk; localStorage.setItem('ap_tk', TOKEN); history.replaceState({}, '', location.pathname); }
+        })();
+        async function checkToken() {
+            if (!TOKEN) { showLogin(); return; }
+            const r = await fetch('/api/check', { headers: { 'X-Auth-Token': TOKEN } });
+            r.ok ? showDashboard() : (TOKEN = '', localStorage.removeItem('ap_tk'), showLogin());
+        }
+        function showLogin() {
+            document.getElementById('loginScreen').classList.remove('hide');
+            document.getElementById('dashboard').style.display = 'none';
+        }
+        function showDashboard() {
+            const ls = document.getElementById('loginScreen');
+            ls.classList.add('hide');
+            setTimeout(() => ls.style.display = 'none', 400);
+            const db = document.getElementById('dashboard');
+            db.style.display = 'flex'; db.style.flexDirection = 'column';
+            loadSection('work');
+        }
+        document.getElementById('pwTog').addEventListener('click', () => {
+            const p = document.getElementById('lPass'); p.type = p.type === 'password' ? 'text' : 'password';
+        });
+        async function doLogin() {
+            const btn = document.getElementById('loginBtn'), err = document.getElementById('loginErr');
+            const user = document.getElementById('lUser').value.trim(), pass = document.getElementById('lPass').value;
+            if (!user || !pass) { err.textContent = T('login-fields-req'); return; }
+            btn.disabled = true; btn.textContent = T('logging-in'); err.textContent = '';
+            const r = await fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: user, password: pass }) });
+            const d = await r.json();
+            if (r.ok) { TOKEN = d.token; localStorage.setItem('ap_tk', TOKEN); window.location.assign('/dashboard?ap_tk=' + encodeURIComponent(d.token)); }
+            else { err.textContent = d.error || T('login-fail'); btn.disabled = false; btn.textContent = T('loginBtn'); }
+        }
+        document.getElementById('loginBtn').addEventListener('click', doLogin);
+        ['lUser', 'lPass'].forEach(id => document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); }));
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            await api('POST', '/api/logout');
+            TOKEN = ''; localStorage.removeItem('ap_tk');
+            document.getElementById('lUser').value = ''; document.getElementById('lPass').value = '';
+            document.getElementById('loginBtn').disabled = false; document.getElementById('loginBtn').textContent = 'Login';
+            document.getElementById('loginErr').textContent = '';
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('loginScreen').classList.remove('hide');
+            document.getElementById('dashboard').style.display = 'none';
+        });
+
+        // ── NAV ───────────────────────────────────────────────────────
+        const SECS = ['work', 'installation', 'studio', 'about', 'contact'];
+        document.querySelectorAll('.nav-item[data-tab]').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                item.classList.add('active');
+                const tab = item.dataset.tab;
+                document.getElementById('tab-' + tab).classList.add('active');
+                if (['work', 'installation', 'studio'].includes(tab)) loadSection(tab);
+                if (tab === 'about') loadAboutSlots();
+                if (tab === 'contact') loadContactSlots();
+                if (tab === 'content') loadContent();
+                if (tab === 'files') loadFiles();
+                if (tab === 'settings') resetPasswordForm();
+            });
+        });
+
+        // ── PASSWORD CHANGE ───────────────────────────────────────────
+        function togglePw(inputId, btn) {
+            const inp = document.getElementById(inputId);
+            inp.type = inp.type === 'password' ? 'text' : 'password';
+            btn.textContent = inp.type === 'password' ? '👁' : '🙈';
+        }
+        function resetPasswordForm() {
+            ['cpOld', 'cpNew', 'cpConf'].forEach(id => { document.getElementById(id).value = ''; });
+            document.getElementById('cpErr').textContent = '';
+            const btn = document.getElementById('cpBtn');
+            btn.disabled = false; btn.textContent = T('pw-update-btn');
+        }
+        async function doChangePassword() {
+            const err = document.getElementById('cpErr');
+            const btn = document.getElementById('cpBtn');
+            const oldP = document.getElementById('cpOld').value;
+            const newP = document.getElementById('cpNew').value;
+            const conf = document.getElementById('cpConf').value;
+            err.textContent = '';
+            if (!oldP || !newP || !conf) { err.textContent = T('pw-field-req'); return; }
+            if (newP.length < 8) { err.textContent = T('pw-min'); return; }
+            if (newP !== conf) { err.textContent = T('pw-mismatch'); return; }
+            btn.disabled = true; btn.innerHTML = `<span style="opacity:.6">${T('updating')}</span>`;
+            try {
+                const r = await api('POST', '/api/change-password', { currentPassword: oldP, newPassword: newP });
+                const d = await r.json();
+                if (r.ok) {
+                    toast(T('pw-ok'), 'ok');
+                    resetPasswordForm();
+                } else {
+                    err.textContent = d.error || T('pw-fail');
+                    btn.disabled = false; btn.textContent = T('pw-update-btn');
+                }
+            } catch (e) {
+                err.textContent = T('pw-connect');
+                btn.disabled = false; btn.textContent = T('pw-update-btn');
+            }
+        }
+        ['cpNew', 'cpConf'].forEach(id => document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') doChangePassword(); }));
+
+        // ── IMAGES ────────────────────────────────────────────────────
+        async function loadSection(sec) {
+            const g = document.getElementById('ig-' + sec);
+            g.innerHTML = `<div class="img-empty">${T('loading')}</div>`;
+            try {
+                const r = await api('GET', '/api/images/' + sec);
+                if (r.status === 401) { TOKEN = ''; localStorage.removeItem('ap_tk'); showLogin(); return; }
+                if (!r.ok) { g.innerHTML = `<div class="img-empty">${T('err-load')}</div>`; return; }
+                renderGrid(sec, await r.json(), g);
+            } catch (e) { g.innerHTML = `<div class="img-empty">${T('err-connect')}</div>`; }
+        }
+        function imgCard(sec, f, src) {
+            const fe = f.replace(/'/g, "\\'");
+            const otherSecs = ['work', 'installation', 'studio', 'about', 'contact'].filter(s => s !== sec);
+            const opts = otherSecs.map(s => `<div class="mv-opt" onclick="moveImg('${sec}','${fe}','${s}')">${s}</div>`).join('');
+            return `<div class="img-card" id="ic-${sec}-${CSS.escape(f)}">
+    <img src="${src}" loading="lazy" alt="${f}"/>
+    <div class="img-body">
+      <div class="img-name" title="${f}">${f}</div>
+      <div class="img-btns">
+        <button class="xbtn del" onclick="delImg('${sec}','${fe}')">${T('btn-delete')}</button>
+        <div class="mv-wrap">
+          <button class="xbtn mv-btn" onclick="toggleMv(this)">${T('btn-move')}</button>
+          <div class="mv-drop">${opts}</div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+        }
+        function renderGrid(sec, files, g) {
+            if (!files.length) { g.innerHTML = `<div class="img-empty">${T('no-images')}</div>`; return; }
+            g.innerHTML = files.map(f => imgCard(sec, f, `/images/${sec}/${encodeURIComponent(f)}?t=${Date.now()}`)).join('');
+        }
+        function toggleMv(btn) {
+            const drop = btn.nextElementSibling;
+            const isOpen = drop.classList.contains('open');
+            document.querySelectorAll('.mv-drop.open').forEach(d => d.classList.remove('open'));
+            if (!isOpen) drop.classList.add('open');
+        }
+        document.addEventListener('click', e => {
+            if (!e.target.classList.contains('mv-btn')) document.querySelectorAll('.mv-drop.open').forEach(d => d.classList.remove('open'));
+        });
+        async function moveImg(sec, name, target) {
+            document.querySelectorAll('.mv-drop.open').forEach(d => d.classList.remove('open'));
+            const r = await api('POST', '/api/move-image', { section: sec, name, target });
+            const d = await r.json();
+            if (r.ok) {
+                document.getElementById(`ic-${sec}-${CSS.escape(name)}`)?.remove();
+                if (!document.querySelector(`#ig-${sec} .img-card`))
+                    document.getElementById('ig-' + sec).innerHTML = `<div class="img-empty">${T('no-images')}</div>`;
+                toast(T('img-moved', name, target), 'ok');
+            } else toast(T('move-fail', d.error), 'err');
+        }
+        async function delImg(sec, name) {
+            if (!confirm(T('confirm-del', name))) return;
+            const r = await api('DELETE', `/api/images/${sec}/${encodeURIComponent(name)}`);
+            if (r.ok) {
+                document.getElementById(`ic-${sec}-${CSS.escape(name)}`)?.remove();
+                if (!document.querySelector(`#ig-${sec} .img-card`))
+                    document.getElementById('ig-' + sec).innerHTML = `<div class="img-empty">${T('no-images')}</div>`;
+                toast(T('img-deleted', name), 'ok');
+            } else toast(T('del-fail'), 'err');
+        }
+        ['work', 'installation', 'studio'].forEach(sec => {
+            const uz = document.getElementById('uz-' + sec), fi = document.getElementById('fi-' + sec);
+            uz.addEventListener('click', () => fi.click());
+            fi.addEventListener('change', () => doUpload(sec, fi.files));
+            uz.addEventListener('dragover', e => { e.preventDefault(); uz.classList.add('drag-over'); });
+            uz.addEventListener('dragleave', () => uz.classList.remove('drag-over'));
+            uz.addEventListener('drop', e => { e.preventDefault(); uz.classList.remove('drag-over'); doUpload(sec, e.dataTransfer.files); });
+        });
+        async function doUpload(sec, files) {
+            if (!files?.length) return;
+            const pw = document.getElementById('pw-' + sec), pf = document.getElementById('pf-' + sec), pt = document.getElementById('pt-' + sec);
+            const g = document.getElementById('ig-' + sec);
+            pw.style.display = 'block'; pf.style.width = '2%'; pt.textContent = T('upload-progress', files.length);
+
+            // Instant optimistic preview — show cards immediately with blob URLs
+            const empEl = g.querySelector('.img-empty'); if (empEl) g.innerHTML = '';
+            const blobCards = Array.from(files).map(file => {
+                const blobUrl = URL.createObjectURL(file);
+                const safeN = file.name.replace(/[^a-zA-Z0-9.\-_]/g, '_');
+                const el = document.createElement('div');
+                el.className = 'img-card uploading-card'; el.style.opacity = '0.5';
+                el.innerHTML = `<img src="${blobUrl}" style="width:100%;height:115px;object-fit:cover"/>
+      <div class="img-body"><div class="img-name">${file.name}</div>
+      <div style="font-size:10px;color:var(--muted);padding:2px 0">${T('upload-card-text')}</div></div>`;
+                g.prepend(el);
+                return { el, blobUrl, safeN };
+            });
+
+            // XHR upload with real progress
+            return new Promise(resolve => {
+                const form = new FormData(); Array.from(files).forEach(f => form.append('images', f));
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '/api/upload/' + sec);
+                xhr.setRequestHeader('X-Auth-Token', TOKEN);
+                xhr.upload.onprogress = e => {
+                    if (e.lengthComputable) { const p = Math.round(e.loaded / e.total * 100); pf.style.width = p + '%'; pt.textContent = T('uploading-pct', p); }
+                };
+                xhr.onload = () => {
+                    pf.style.width = '100%';
+                    try {
+                        const d = JSON.parse(xhr.responseText);
+                        if (xhr.status === 401) { TOKEN = ''; localStorage.removeItem('ap_tk'); showLogin(); resolve(); return; }
+                        if (d.uploaded && d.uploaded.length) {
+                            pt.textContent = T('upload-done', d.uploaded.length);
+                            toast(T('upload-ok', d.uploaded.length), 'ok');
+                            // Replace blob cards with real server cards
+                            blobCards.forEach(({ el, blobUrl }) => { URL.revokeObjectURL(blobUrl); el.remove(); });
+                            d.uploaded.forEach(fname => {
+                                const card = document.createElement('div');
+                                card.outerHTML; // temp
+                                g.insertAdjacentHTML('afterbegin', imgCard(sec, fname, `/images/${sec}/${encodeURIComponent(fname)}?t=${Date.now()}`));
+                            });
+                        } else {
+                            pt.textContent = T('upload-err-inline', d.error);
+                            toast(T('upload-fail', d.error), 'err');
+                            blobCards.forEach(({ el, blobUrl }) => { URL.revokeObjectURL(blobUrl); el.remove(); });
+                        }
+                    } catch (e) { pt.textContent = T('upload-err-resp'); toast(T('upload-fail', ''), 'err'); blobCards.forEach(({ el, blobUrl }) => { URL.revokeObjectURL(blobUrl); el.remove(); }); }
+                    setTimeout(() => { pw.style.display = 'none'; pf.style.width = '0%'; }, 2500);
+                    resolve();
+                };
+                xhr.onerror = () => {
+                    pt.textContent = T('net-err');
+                    toast(T('err-connect'), 'err');
+                    blobCards.forEach(({ el, blobUrl }) => { URL.revokeObjectURL(blobUrl); el.remove(); });
+                    setTimeout(() => { pw.style.display = 'none'; pf.style.width = '0%'; }, 3000);
+                    resolve();
+                };
+                xhr.send(form);
+            }).finally(() => { document.getElementById('fi-' + sec).value = ''; });
+        }
+
+        // ── ABOUT SLOTS ───────────────────────────────────────────────
+        async function loadAboutSlots() {
+            try {
+                const r = await api('GET', '/api/about-slots');
+                if (r.status === 401) { TOKEN = ''; localStorage.removeItem('ap_tk'); showLogin(); return; }
+                const slots = await r.json();
+                ['hero', 'portrait', 'studio'].forEach(slot => {
+                    const prev = document.getElementById('asp-' + slot);
+                    if (slots[slot]) {
+                        prev.innerHTML = `<img src="/images/about/${encodeURIComponent(slots[slot])}?t=${Date.now()}" alt="${slot}"/>`;
+                    } else {
+                        prev.innerHTML = `<div class="asc-empty">${T('no-image')}</div>`;
+                    }
+                });
+            } catch (e) { toast(T('slot-load-fail'), 'err'); }
+        }
+        async function uploadAboutSlot(slot, file) {
+            if (!file) return;
+            const prev = document.getElementById('asp-' + slot);
+            const blobUrl = URL.createObjectURL(file);
+            prev.innerHTML = `<img src="${blobUrl}" alt="uploading" style="opacity:0.5"/>`;
+            const form = new FormData();
+            form.append('image', file);
+            try {
+                const r = await api('POST', '/api/about-slot/' + slot, form);
+                const d = await r.json();
+                if (r.ok) {
+                    URL.revokeObjectURL(blobUrl);
+                    prev.innerHTML = `<img src="/images/about/${encodeURIComponent(d.filename)}?t=${Date.now()}" alt="${slot}"/>`;
+                    toast(T('slot-ok', slot), 'ok');
+                } else {
+                    prev.innerHTML = `<div class="asc-empty">${T('no-image')}</div>`;
+                    toast(T('slot-fail', d.error), 'err');
+                }
+            } catch (e) {
+                prev.innerHTML = `<div class="asc-empty">${T('no-image')}</div>`;
+                toast(T('del-fail-srv'), 'err');
+            }
+        }
+        async function deleteAboutSlot(slot) {
+            if (!confirm(T('confirm-slot-del', slot))) return;
+            try {
+                const r = await api('DELETE', '/api/about-slot/' + slot);
+                if (r.ok) {
+                    document.getElementById('asp-' + slot).innerHTML = `<div class="asc-empty">${T('no-image')}</div>`;
+                    toast(T('slot-del-ok', slot), 'ok');
+                } else toast(T('del-fail'), 'err');
+            } catch (e) { toast(T('del-fail-srv'), 'err'); }
+        }
+
+        // ── CONTACT SLOTS ─────────────────────────────────────────────
+        async function loadContactSlots() {
+            try {
+                const r = await api('GET', '/api/contact-slots');
+                if (r.status === 401) { TOKEN = ''; localStorage.removeItem('ap_tk'); showLogin(); return; }
+                const slots = await r.json();
+                ['hero', 'exhibition', 'studio'].forEach(slot => {
+                    const prev = document.getElementById('csp-' + slot);
+                    if (slots[slot]) {
+                        prev.innerHTML = `<img src="/images/contact/${encodeURIComponent(slots[slot])}?t=${Date.now()}" alt="${slot}"/>`;
+                    } else {
+                        prev.innerHTML = `<div class="asc-empty">${T('no-image')}</div>`;
+                    }
+                });
+            } catch (e) { toast(T('cslot-load-fail'), 'err'); }
+        }
+        async function uploadContactSlot(slot, file) {
+            if (!file) return;
+            const prev = document.getElementById('csp-' + slot);
+            const blobUrl = URL.createObjectURL(file);
+            prev.innerHTML = `<img src="${blobUrl}" alt="uploading" style="opacity:0.5"/>`;
+            const form = new FormData();
+            form.append('image', file);
+            try {
+                const r = await api('POST', '/api/contact-slot/' + slot, form);
+                const d = await r.json();
+                if (r.ok) {
+                    URL.revokeObjectURL(blobUrl);
+                    prev.innerHTML = `<img src="/images/contact/${encodeURIComponent(d.filename)}?t=${Date.now()}" alt="${slot}"/>`;
+                    toast(T('slot-ok', slot), 'ok');
+                } else {
+                    prev.innerHTML = `<div class="asc-empty">${T('no-image')}</div>`;
+                    toast(T('slot-fail', d.error), 'err');
+                }
+            } catch (e) {
+                prev.innerHTML = `<div class="asc-empty">${T('no-image')}</div>`;
+                toast(T('del-fail-srv'), 'err');
+            }
+        }
+        async function deleteContactSlot(slot) {
+            if (!confirm(T('confirm-slot-del', slot))) return;
+            try {
+                const r = await api('DELETE', '/api/contact-slot/' + slot);
+                if (r.ok) {
+                    document.getElementById('csp-' + slot).innerHTML = `<div class="asc-empty">${T('no-image')}</div>`;
+                    toast(T('slot-del-ok', slot), 'ok');
+                } else toast(T('del-fail'), 'err');
+            } catch (e) { toast(T('del-fail-srv'), 'err'); }
+        }
+
+        // ── APPLY MODAL ───────────────────────────────────────────────
+        async function openApply(sec, img) {
+            applySec = sec; applyImg = img;
+            document.getElementById('applyModal').style.display = 'flex';
+            const g = document.getElementById('modalGrid'), em = document.getElementById('modalEmpty');
+            g.innerHTML = `<div class="img-empty">${T('loading')}</div>`; em.style.display = 'none';
+            const r = await api('GET', '/api/page-images/' + sec), d = await r.json();
+            document.getElementById('modalFile').textContent = d.file || '—';
+            if (!d.srcs?.length) { g.innerHTML = ''; em.style.display = 'block'; return; }
+            g.innerHTML = d.srcs.map(src => `
+    <div class="m-img-item" onclick="doApply('${src.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}')">
+      <img src="${src}" alt="img" loading="lazy" onerror="this.style.minHeight='96px';this.style.background='#1a1a1a'"/>
+      <div class="m-img-src">${src.split('/').pop()}</div>
+    </div>`).join('');
+        }
+        async function doApply(oldSrc) {
+            if (!confirm(T('confirm-apply', oldSrc, applySec, applyImg))) return;
+            const r = await api('POST', '/api/apply-image', { section: applySec, newImage: applyImg, oldSrc });
+            const d = await r.json();
+            r.ok ? (toast(T('img-replaced'), 'ok'), closeModal()) : toast('Error: ' + (d.error || 'Failed'), 'err');
+        }
+        function closeModal() { document.getElementById('applyModal').style.display = 'none'; }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+        // ── CONTENT EDITOR ────────────────────────────────────────────
+        async function loadContent() {
+            try {
+                const r = await api('GET', '/api/content');
+                if (r.status === 401) { TOKEN = ''; localStorage.removeItem('ap_tk'); showLogin(); return; }
+                const data = await r.json();
+                document.querySelectorAll('[data-key]').forEach(el => {
+                    if (data[el.dataset.key] !== undefined) {
+                        el.value = data[el.dataset.key];
+                    }
+                });
+                // Load exhibitions
+                const er = await api('GET', '/api/exhibitions');
+                const exhs = await er.json();
+                renderExhibitions(exhs);
+            } catch (e) { toast(T('content-load-fail'), 'err'); }
+        }
+        function renderExhibitions(list) {
+            const el = document.getElementById('exhList');
+            if (!list.length) { el.innerHTML = `<div style="color:var(--muted);font-size:12px;padding:8px 0">${T('exh-no-entries')}</div>`; return; }
+            el.innerHTML = list.map(e => `
+    <div class="exh-row">
+      <span class="exh-year">${e.year}</span>
+      <span class="exh-title">${e.title}</span>
+      <button class="exh-del" onclick="deleteExhibition(${e.id})" title="Delete">✕</button>
+    </div>
+  `).join('');
+        }
+        async function saveContent() {
+            const st = document.getElementById('cntSt');
+            st.textContent = T('saving'); st.className = 'ed-status';
+            const data = {};
+            document.querySelectorAll('[data-key]').forEach(el => {
+                data[el.dataset.key] = el.value;
+            });
+            try {
+                const r = await api('POST', '/api/content', data);
+                if (r.ok) {
+                    st.textContent = T('save-success'); st.className = 'ed-status sv';
+                    toast(T('content-ok'), 'ok');
+                } else {
+                    st.textContent = T('save-error'); st.className = 'ed-status er';
+                    toast(T('content-fail'), 'err');
+                }
+            } catch (e) { st.textContent = T('save-error'); st.className = 'ed-status er'; }
+        }
+        async function addExhibition() {
+            const year = document.getElementById('exhYear').value.trim();
+            const title = document.getElementById('exhTitle').value.trim();
+            if (!year || !title) { toast(T('exh-req'), 'err'); return; }
+            const r = await api('POST', '/api/exhibitions', { year, title });
+            if (r.ok) {
+                document.getElementById('exhYear').value = '';
+                document.getElementById('exhTitle').value = '';
+                toast(T('exh-added'), 'ok');
+                const er = await api('GET', '/api/exhibitions');
+                renderExhibitions(await er.json());
+            } else toast(T('exh-add-fail'), 'err');
+        }
+        async function deleteExhibition(id) {
+            if (!confirm(T('confirm-exh-del'))) return;
+            const r = await api('DELETE', '/api/exhibitions/' + id);
+            if (r.ok) {
+                toast(T('exh-deleted'), 'ok');
+                const er = await api('GET', '/api/exhibitions');
+                renderExhibitions(await er.json());
+            } else toast(T('exh-del-fail'), 'err');
+        }
+
+        // ── FILE EDITOR ───────────────────────────────────────────────
+        let curFile = null;
+        async function loadFiles() {
+            const r = await api('GET', '/api/files'), files = await r.json();
+            document.getElementById('filePills').innerHTML = files.map(f =>
+                `<button class="f-pill ${f === curFile ? 'active' : ''}" onclick="openFile('${f}')">${f}</button>`).join('');
+        }
+        async function openFile(name) {
+            curFile = name;
+            document.querySelectorAll('.f-pill').forEach(b => b.classList.toggle('active', b.textContent === name));
+            const r = await api('GET', '/api/files/' + encodeURIComponent(name)), d = await r.json();
+            document.getElementById('edName').textContent = name;
+            document.getElementById('codeEd').value = d.content;
+            document.getElementById('edWrap').style.display = 'block';
+            const s = document.getElementById('edSt'); s.textContent = ''; s.className = 'ed-status';
+        }
+        document.getElementById('saveBtn').addEventListener('click', async () => {
+            if (!curFile) return;
+            const s = document.getElementById('edSt'); s.textContent = T('saving'); s.className = 'ed-status';
+            const r = await api('POST', '/api/files/' + encodeURIComponent(curFile), { content: document.getElementById('codeEd').value });
+            r.ok ? (s.textContent = T('save-success'), s.className = 'ed-status sv', toast(T('file-saved', curFile), 'ok'))
+                : (s.textContent = T('save-error'), s.className = 'ed-status er', toast(T('content-fail'), 'err'));
+        });
+        document.getElementById('codeEd').addEventListener('keydown', e => {
+            if (e.key === 'Tab') { e.preventDefault(); const s = e.target.selectionStart; e.target.value = e.target.value.slice(0, s) + '  ' + e.target.value.slice(e.target.selectionEnd); e.target.selectionStart = e.target.selectionEnd = s + 2; }
+        });
+
+        // ── DEPLOY ────────────────────────────────────────────────────
+        document.getElementById('deployBtn').addEventListener('click', async () => {
+            const btn = document.getElementById('deployBtn'), spin = document.getElementById('deplSpin');
+            const stat = document.getElementById('deplSt'), log = document.getElementById('logBox');
+            btn.disabled = true; spin.style.display = 'block'; stat.textContent = T('deploying'); stat.style.color = '';
+            log.style.display = 'block'; log.innerHTML = '';
+            try {
+                const res = await api('POST', '/api/deploy');
+                const reader = res.body.getReader(), dec = new TextDecoder(); let buf = '';
+                while (true) {
+                    const { value, done } = await reader.read(); if (done) break;
+                    buf += dec.decode(value, { stream: true });
+                    const lines = buf.split('\n'); buf = lines.pop();
+                    for (const line of lines) {
+                        if (!line.startsWith('data: ')) continue;
+                        const data = line.slice(6);
+                        if (data.startsWith('__DONE__:')) {
+                            btn.disabled = false; spin.style.display = 'none';
+                            data.split(':')[1] === '0' ? (stat.textContent = T('deploy-success-stat'), stat.style.color = 'var(--green)', toast(T('deploy-ok'), 'ok'))
+                                : (stat.textContent = T('deploy-fail-stat'), stat.style.color = 'var(--red)', toast(T('deploy-fail'), 'err'));
+                        } else {
+                            const el = document.createElement('span');
+                            el.className = /error|fail/i.test(data) ? 'err' : /https:\/\//.test(data) ? 'url' : /✓|success|live/i.test(data) ? 'ok' : '';
+                            el.textContent = data + '\n'; log.appendChild(el); log.scrollTop = log.scrollHeight;
+                        }
+                    }
+                }
+            } catch (e) { btn.disabled = false; spin.style.display = 'none'; stat.textContent = T('connection-err'); stat.style.color = 'var(--red)'; }
+        });
+
+        // ── ADMIN i18n ────────────────────────────────────────────────
+        const ADMIN_LANG = {
+            it: {
+                'login-sub':'Admin Panel',         'loginBtn':'Accedi',
+                'logoutBtn':'Esci',
+                'nav-lbl-sezioni':'Sezioni',        'nav-lbl-tools':'Strumenti',       'nav-lbl-account':'Account',
+                'nav-work':'Work',                  'nav-installation':'Installation',  'nav-studio':'Studio',
+                'nav-about':'About',                'nav-contact':'Contact',
+                'nav-files':'File Editor',          'nav-content':'Contenuto',
+                'nav-deploy':'Deploy',              'nav-settings':'Password',
+                'tab-work-title':'Work',
+                'tab-work-sub':'Carica immagini per <strong>work.html</strong>. Le immagini caricate appariranno automaticamente sul sito.',
+                'upload-text-work':'<strong>Trascina qui le immagini</strong> o clicca per selezionare<br>(JPG, PNG, WebP — max 30MB)',
+                'tab-installation-title':'Installation View',
+                'tab-installation-sub':'Carica immagini per <strong>installation.html</strong>.',
+                'upload-text-installation':'<strong>Trascina qui le immagini</strong> o clicca per selezionare',
+                'tab-studio-title':'Studio',
+                'tab-studio-sub':'Carica immagini per <strong>studio.html</strong>.',
+                'upload-text-studio':'<strong>Trascina qui le immagini</strong> o clicca per selezionare',
+                'tab-about-title':'About',
+                'tab-about-sub':'Gestisci le 3 immagini della pagina About. Carica un\'immagine per ogni slot.',
+                'hero-hint-about':'(Banner a tutta larghezza — in cima alla pagina · <strong>1800 × 800 px</strong>)',
+                'portrait-hint':'(Colonna destra — foto dell\'artista · <strong>550 × 550 px</strong>)',
+                'studio-hint-about':'(Sezione contatti — foto studio · <strong>1200 × 800 px</strong>)',
+                'tab-contact-title':'Contact / Home',
+                'tab-contact-sub':'Gestisci le 3 immagini principali della Home page (<strong>index.html</strong>).',
+                'hero-hint-contact':'(Banner a tutta larghezza — in cima alla pagina · <strong>1800 × 1000 px</strong>)',
+                'exhibition-hint':'(Ultima mostra — immagine a tutta larghezza · <strong>1800 × 900 px</strong>)',
+                'studio-hint-contact':'(Sezione contatti — foto studio · <strong>1200 × 800 px</strong>)',
+                'slot-empty':'Nessuna immagine',
+                'tab-files-title':'File Editor',
+                'tab-files-sub':'Modifica qualsiasi file HTML direttamente e salva.',
+                'files-loading':'Caricamento...', 'editing-label':'Modifica:', 'save-btn':'Salva',
+                'tab-content-title':'Editor Contenuti',
+                'tab-content-sub':'Modifica il contenuto testuale del sito. Dopo il salvataggio il sito si aggiorna automaticamente.',
+                'cnt-home':'🏠 Home Page',         'cnt-exhibition':'🎨 Exhibition',
+                'cnt-about':'👤 About Page',        'cnt-studio':'📐 Studio / Contact',
+                'cnt-footer':'📄 Footer',           'cnt-percorso':'📋 Percorso Professionale',
+                'exh-year-ph':'Anno',               'exh-title-ph':'Titolo / Descrizione',
+                'add-btn':'+ Aggiungi',             'save-all-btn':'💾 Salva Tutto',
+                'tab-deploy-title':'Deploy',
+                'tab-deploy-sub':'Pubblica il sito su Netlify con un clic.',
+                'dep-h2':'Sito Live',               'dep-p':'Il tuo sito pubblico:',
+                'deploy-btn-text':'Pubblica Ora',
+                'tab-settings-title':'Cambia Password',
+                'tab-settings-sub':'Cambia la tua password di accesso. La nuova password deve avere almeno 8 caratteri.',
+                'pw-h2':'Cambia Password',
+                'cp-old-label':'Password Attuale',  'cp-old-ph':'Password attuale',
+                'cp-new-label':'Nuova Password',    'cp-new-ph':'Nuova password (min 8 caratteri)',
+                'cp-conf-label':'Conferma Nuova Password', 'cp-conf-ph':'Ripeti la nuova password',
+                'cp-btn-text':'Aggiorna Password',
+                'modal-h3':'Sostituisci Immagine nella Pagina',
+                'modal-p-text':'Seleziona l\'immagine da sostituire — ',
+                'modal-lbl':'Immagini attualmente nella pagina:',
+                'modal-empty':'Nessuna immagine trovata in questa pagina.',
+                'loading':'Caricamento…',           'err-load':'Errore di caricamento. Controlla il server.',
+                'err-connect':'Impossibile connettersi al server.',
+                'no-images':'Nessuna immagine — carica qualcosa!',
+                'no-image':'Nessuna immagine',
+                'img-moved':(n,t)=>`${n} → ${t} spostata ✓`,
+                'img-deleted':n=>`${n} eliminata.`,
+                'img-replaced':'Immagine sostituita nella pagina! ✓',
+                'upload-ok':n=>`${n} immagine/i caricate! ✓`,
+                'upload-fail':e=>'Upload fallito: '+(e||'Errore'),
+                'net-err':'Errore di rete — server attivo?',
+                'upload-progress':n=>`Caricamento ${n} file...`,
+                'uploading-pct':p=>`Caricamento… ${p}%`,
+                'upload-done':n=>`✓ ${n} caricati`,
+                'upload-err-inline':e=>'Errore: '+(e||'Errore server'),
+                'upload-err-resp':'Errore risposta server.',
+                'upload-card-text':'Caricamento…',
+                'login-fields-req':'Inserire username e password.',
+                'logging-in':'Accesso in corso…',
+                'login-fail':'Accesso fallito.',
+                'connection-err':'✗ Errore di connessione.',
+                'btn-delete':'Elimina', 'btn-move':'Sposta ▾',
+                'saving':'Saving…', 'save-success':'✓ Saved', 'save-error':'✗ Error',
+                'content-ok':'Contenuto salvato! ✓', 'content-fail':'Salvataggio fallito.',
+                'content-load-fail':'Impossibile caricare il contenuto.',
+                'exh-req':'Anno e titolo sono obbligatori.',
+                'exh-added':'Voce aggiunta! ✓',     'exh-add-fail':'Aggiunta fallita.',
+                'exh-deleted':'Voce eliminata.',     'exh-del-fail':'Eliminazione fallita.',
+                'exh-no-entries':'Nessuna voce.',
+                'deploy-ok':'Sito pubblicato! 🎉',  'deploy-fail':'Deploy fallito.',
+                'deploying':'Pubblicazione in corso…',
+                'deploy-success-stat':'✓ Deploy riuscito!', 'deploy-fail-stat':'✗ Deploy fallito.',
+                'slot-ok':s=>`Immagine ${s} caricata! ✓`,
+                'slot-del-ok':s=>`Immagine ${s} eliminata.`,
+                'slot-load-fail':'Impossibile caricare gli slot About.',
+                'cslot-load-fail':'Impossibile caricare gli slot Contact.',
+                'slot-fail':e=>'Upload fallito: '+(e||'Errore'),
+                'del-fail':'Eliminazione fallita.',  'del-fail-srv':'Impossibile connettersi al server.',
+                'move-fail':e=>'Spostamento fallito: '+(e||'Errore'),
+                'pw-ok':'Password aggiornata con successo! ✓',
+                'pw-fail':'Aggiornamento password fallito.',
+                'pw-connect':'Impossibile connettersi al server.',
+                'pw-field-req':'Tutti i campi sono obbligatori.',
+                'pw-min':'La nuova password deve avere almeno 8 caratteri.',
+                'pw-mismatch':'La nuova password e la conferma non corrispondono.',
+                'pw-update-btn':'Aggiorna Password', 'updating':'Aggiornamento…',
+                'file-saved':f=>`${f} salvato!`,
+                'confirm-del':n=>`Elimina "${n}"?`,
+                'confirm-exh-del':'Eliminare questa voce?',
+                'confirm-apply':(old,sec,img)=>`Sostituisci immagine:\n${old}\n\nNuova immagine:\nimages/${sec}/${img}\n\nContinuare?`,
+                'confirm-slot-del':s=>`Eliminare l\'immagine "${s}"?`,
+            },
+            en: {
+                'login-sub':'Admin Panel',         'loginBtn':'Login',
+                'logoutBtn':'Logout',
+                'nav-lbl-sezioni':'Sections',       'nav-lbl-tools':'Tools',           'nav-lbl-account':'Account',
+                'nav-work':'Work',                  'nav-installation':'Installation',  'nav-studio':'Studio',
+                'nav-about':'About',                'nav-contact':'Contact',
+                'nav-files':'File Editor',          'nav-content':'Content',
+                'nav-deploy':'Deploy',              'nav-settings':'Password',
+                'tab-work-title':'Work',
+                'tab-work-sub':'Upload images for <strong>work.html</strong>. Uploaded images will appear automatically on the website.',
+                'upload-text-work':'<strong>Drop images here</strong> or click to select<br>(JPG, PNG, WebP — max 30MB)',
+                'tab-installation-title':'Installation View',
+                'tab-installation-sub':'Upload images for <strong>installation.html</strong>.',
+                'upload-text-installation':'<strong>Drop images here</strong> or click to select',
+                'tab-studio-title':'Studio',
+                'tab-studio-sub':'Upload images for <strong>studio.html</strong>.',
+                'upload-text-studio':'<strong>Drop images here</strong> or click to select',
+                'tab-about-title':'About',
+                'tab-about-sub':'Manage the 3 images for the About page. Upload one image per slot.',
+                'hero-hint-about':'(Full-width banner — top of page · <strong>1800 × 800 px</strong>)',
+                'portrait-hint':'(Right column — artist photo · <strong>550 × 550 px</strong>)',
+                'studio-hint-about':'(Contact section — studio photo · <strong>1200 × 800 px</strong>)',
+                'tab-contact-title':'Contact / Home',
+                'tab-contact-sub':'Manage the 3 main images for the Home page (<strong>index.html</strong>).',
+                'hero-hint-contact':'(Full-width banner — top of page · <strong>1800 × 1000 px</strong>)',
+                'exhibition-hint':'(Latest exhibition — full-width image · <strong>1800 × 900 px</strong>)',
+                'studio-hint-contact':'(Contact section — studio photo · <strong>1200 × 800 px</strong>)',
+                'slot-empty':'No image',
+                'tab-files-title':'File Editor',
+                'tab-files-sub':'Edit any HTML file directly and save.',
+                'files-loading':'Loading...', 'editing-label':'Editing:', 'save-btn':'Save',
+                'tab-content-title':'Content Editor',
+                'tab-content-sub':'Edit website text content. After saving the site updates automatically.',
+                'cnt-home':'🏠 Home Page',         'cnt-exhibition':'🎨 Exhibition',
+                'cnt-about':'👤 About Page',        'cnt-studio':'📐 Studio / Contact',
+                'cnt-footer':'📄 Footer',           'cnt-percorso':'📋 Percorso Professionale',
+                'exh-year-ph':'Year',               'exh-title-ph':'Title / Description',
+                'add-btn':'+ Add',                  'save-all-btn':'💾 Save All Content',
+                'tab-deploy-title':'Deploy',
+                'tab-deploy-sub':'Publish the website to Netlify with one click.',
+                'dep-h2':'Live Website',            'dep-p':'Your public website:',
+                'deploy-btn-text':'Deploy Now',
+                'tab-settings-title':'Change Password',
+                'tab-settings-sub':'Change your login password. The new password must be at least 8 characters.',
+                'pw-h2':'Change Password',
+                'cp-old-label':'Current Password',  'cp-old-ph':'Current password',
+                'cp-new-label':'New Password',      'cp-new-ph':'New password (min 8 chars)',
+                'cp-conf-label':'Confirm New Password', 'cp-conf-ph':'Repeat new password',
+                'cp-btn-text':'Update Password',
+                'modal-h3':'Replace Image in Page',
+                'modal-p-text':'Select the image to replace — ',
+                'modal-lbl':'Images currently in the page:',
+                'modal-empty':'No images found in this page.',
+                'loading':'Loading…',               'err-load':'Error loading. Check the server.',
+                'err-connect':'Could not connect to server.',
+                'no-images':'No images yet — upload some!',
+                'no-image':'No image',
+                'img-moved':(n,t)=>`${n} → ${t} moved ✓`,
+                'img-deleted':n=>`${n} deleted.`,
+                'img-replaced':'Image replaced in page! ✓',
+                'upload-ok':n=>`${n} image(s) uploaded! ✓`,
+                'upload-fail':e=>'Upload failed: '+(e||'Error'),
+                'net-err':'Network error — is the server running?',
+                'upload-progress':n=>`Uploading ${n} file(s)…`,
+                'uploading-pct':p=>`Uploading… ${p}%`,
+                'upload-done':n=>`✓ ${n} uploaded`,
+                'upload-err-inline':e=>'Error: '+(e||'Server error'),
+                'upload-err-resp':'Server response error.',
+                'upload-card-text':'Uploading…',
+                'login-fields-req':'Enter username and password.',
+                'logging-in':'Logging in…',
+                'login-fail':'Login failed.',
+                'connection-err':'✗ Connection error.',
+                'btn-delete':'Delete', 'btn-move':'Move ▾',
+                'saving':'Saving…', 'save-success':'✓ Saved', 'save-error':'✗ Error',
+                'content-ok':'Content saved! ✓',    'content-fail':'Save failed.',
+                'content-load-fail':'Could not load content.',
+                'exh-req':'Year and title are required.',
+                'exh-added':'Entry added! ✓',       'exh-add-fail':'Add failed.',
+                'exh-deleted':'Entry deleted.',      'exh-del-fail':'Delete failed.',
+                'exh-no-entries':'No entries.',
+                'deploy-ok':'Website is live! 🎉',  'deploy-fail':'Deploy failed.',
+                'deploying':'Deploying…',
+                'deploy-success-stat':'✓ Deploy successful!', 'deploy-fail-stat':'✗ Deploy failed.',
+                'slot-ok':s=>`${s} image uploaded! ✓`,
+                'slot-del-ok':s=>`${s} image deleted.`,
+                'slot-load-fail':'Could not load About slots.',
+                'cslot-load-fail':'Could not load Contact slots.',
+                'slot-fail':e=>'Upload failed: '+(e||'Error'),
+                'del-fail':'Delete failed.',         'del-fail-srv':'Could not connect to server.',
+                'move-fail':e=>'Move failed: '+(e||'Error'),
+                'pw-ok':'Password updated successfully! ✓',
+                'pw-fail':'Password update failed.',
+                'pw-connect':'Could not connect to server.',
+                'pw-field-req':'All fields are required.',
+                'pw-min':'New password must be at least 8 characters.',
+                'pw-mismatch':'New password and confirmation do not match.',
+                'pw-update-btn':'Update Password',  'updating':'Updating…',
+                'file-saved':f=>`${f} saved!`,
+                'confirm-del':n=>`Delete "${n}"?`,
+                'confirm-exh-del':'Delete this entry?',
+                'confirm-apply':(old,sec,img)=>`Replace image:\n${old}\n\nNew image:\nimages/${sec}/${img}\n\nContinue?`,
+                'confirm-slot-del':s=>`Delete "${s}" image?`,
+            }
+        };
+        let _adminLang = localStorage.getItem('ap_lang') || 'it';
+        function T(key, ...args) {
+            const val = (ADMIN_LANG[_adminLang] || ADMIN_LANG.it)[key];
+            if (val === undefined) return key;
+            return typeof val === 'function' ? val(...args) : val;
+        }
+        function setAdminLang(lang) { _adminLang = lang; localStorage.setItem('ap_lang', lang); applyAdminLang(); }
+        function applyAdminLang() {
+            document.querySelectorAll('[data-alang]').forEach(b => b.classList.toggle('active', b.dataset.alang === _adminLang));
+            document.querySelector('.login-sub').textContent = T('login-sub');
+            document.getElementById('loginBtn').textContent = T('loginBtn');
+            document.getElementById('logoutBtn').textContent = T('logoutBtn');
+            const navLbls = document.querySelectorAll('.nav-lbl');
+            if (navLbls[0]) navLbls[0].textContent = T('nav-lbl-sezioni');
+            if (navLbls[1]) navLbls[1].textContent = T('nav-lbl-tools');
+            if (navLbls[2]) navLbls[2].textContent = T('nav-lbl-account');
+            document.querySelectorAll('.nav-item[data-tab]').forEach(el => {
+                const key = 'nav-' + el.dataset.tab;
+                for (let i = el.childNodes.length - 1; i >= 0; i--) {
+                    if (el.childNodes[i].nodeType === Node.TEXT_NODE) { el.childNodes[i].textContent = T(key); break; }
+                }
+            });
+            ['work','installation','studio','about','contact','files','content','deploy','settings'].forEach(tab => {
+                const tabEl = document.getElementById('tab-' + tab); if (!tabEl) return;
+                const title = tabEl.querySelector('.pg-title'); if (title) title.textContent = T('tab-' + tab + '-title');
+                const sub = tabEl.querySelector('.pg-sub'); if (sub) sub.innerHTML = T('tab-' + tab + '-sub');
+            });
+            ['work','installation','studio'].forEach(sec => {
+                const p = document.querySelector('#uz-' + sec + ' p'); if (p) p.innerHTML = T('upload-text-' + sec);
+            });
+            [['asc-hero','hero-hint-about'],['asc-portrait','portrait-hint'],['asc-studio','studio-hint-about']].forEach(([id,key]) => {
+                const h = document.querySelector('#' + id + ' .asc-hint'); if (h) h.innerHTML = T(key);
+            });
+            [['csc-hero','hero-hint-contact'],['csc-exhibition','exhibition-hint'],['csc-studio','studio-hint-contact']].forEach(([id,key]) => {
+                const h = document.querySelector('#' + id + ' .asc-hint'); if (h) h.innerHTML = T(key);
+            });
+            document.querySelectorAll('.asc-empty').forEach(el => { el.textContent = T('slot-empty'); });
+            const fp = document.getElementById('filePills');
+            if (fp && ['Loading...','Caricamento...'].includes(fp.textContent.trim())) fp.textContent = T('files-loading');
+            const edFname = document.querySelector('.ed-fname');
+            if (edFname) { for (const n of edFname.childNodes) { if (n.nodeType === Node.TEXT_NODE) { n.textContent = T('editing-label') + ' '; break; } } }
+            document.getElementById('saveBtn').textContent = T('save-btn');
+            const cntKeys = ['cnt-home','cnt-exhibition','cnt-about','cnt-studio','cnt-footer','cnt-percorso'];
+            document.querySelectorAll('.cnt-heading').forEach((el, i) => { if (cntKeys[i]) el.textContent = T(cntKeys[i]); });
+            const eyr = document.getElementById('exhYear'); if (eyr) eyr.placeholder = T('exh-year-ph');
+            const etit = document.getElementById('exhTitle'); if (etit) etit.placeholder = T('exh-title-ph');
+            const addBtn = document.getElementById('addExhBtn'); if (addBtn) addBtn.textContent = T('add-btn');
+            const svcBtn = document.getElementById('saveContentBtn'); if (svcBtn) svcBtn.textContent = T('save-all-btn');
+            const deph2 = document.querySelector('#tab-deploy .dep-card h2'); if (deph2) deph2.textContent = T('dep-h2');
+            const depp = document.querySelector('#tab-deploy .dep-card > p'); if (depp) depp.textContent = T('dep-p');
+            const depBtn = document.getElementById('deployBtn');
+            if (depBtn) { const svg = depBtn.querySelector('svg'); depBtn.innerHTML = (svg ? svg.outerHTML + ' ' : '') + T('deploy-btn-text'); }
+            const pwh2 = document.querySelector('#tab-settings .dep-card h2'); if (pwh2) pwh2.textContent = T('pw-h2');
+            const cpLbls = document.querySelectorAll('#tab-settings .fg label');
+            ['cp-old-label','cp-new-label','cp-conf-label'].forEach((k,i) => { if (cpLbls[i]) cpLbls[i].textContent = T(k); });
+            const cpOldEl = document.getElementById('cpOld'); if (cpOldEl) cpOldEl.placeholder = T('cp-old-ph');
+            const cpNewEl = document.getElementById('cpNew'); if (cpNewEl) cpNewEl.placeholder = T('cp-new-ph');
+            const cpConfEl = document.getElementById('cpConf'); if (cpConfEl) cpConfEl.placeholder = T('cp-conf-ph');
+            const cpBtnEl = document.getElementById('cpBtn');
+            if (cpBtnEl) { const svg = cpBtnEl.querySelector('svg'); cpBtnEl.innerHTML = (svg ? svg.outerHTML + ' ' : '') + T('cp-btn-text'); }
+            const mh3 = document.querySelector('.modal-hd h3'); if (mh3) mh3.textContent = T('modal-h3');
+            const mp = document.querySelector('.modal-hd p');
+            if (mp) { const sf = mp.querySelector('strong'); mp.innerHTML = T('modal-p-text') + '<strong id="modalFile">' + (sf ? sf.textContent : '') + '</strong>'; }
+            const mlbl = document.querySelector('.modal-lbl'); if (mlbl) mlbl.textContent = T('modal-lbl');
+            const mEmpty = document.getElementById('modalEmpty'); if (mEmpty) mEmpty.textContent = T('modal-empty');
+        }
+
+        // ── INIT ──────────────────────────────────────────────────────
+        applyAdminLang();
+        checkToken();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,108 @@
+{
+  "work": [
+    "b1.jpg",
+    "b10.jpg",
+    "b11.jpg",
+    "b12.jpg",
+    "b13.jpg",
+    "b14.jpg",
+    "b15.jpg",
+    "b16.jpg",
+    "b2.jpg",
+    "b3.jpg",
+    "b4.jpg",
+    "b5.jpg",
+    "b6.jpg",
+    "b7.jpg",
+    "b8.jpg",
+    "b9.jpg"
+  ],
+  "installation": [
+    "Terrazza_Baratti.jpg",
+    "Terrazza_Stella_Marina.jpg",
+    "Terrazza_del_Frate.jpg",
+    "Terrazza_la_Rotonda.jpg",
+    "terrazza.jpg",
+    "terrazza_del_Coesaro.jpg"
+  ],
+  "studio": [],
+  "about": [
+    "about-hero.PNG",
+    "about-portrait.PNG",
+    "about-studio.PNG",
+    "chi-sono-profile.png"
+  ],
+  "contact": [
+    "chi-sono-profile.png",
+    "contact-hero.PNG",
+    "contact-studio.PNG"
+  ],
+  "aboutSlots": {
+    "hero": "about-hero.PNG",
+    "portrait": "about-portrait.PNG",
+    "studio": "about-studio.PNG"
+  },
+  "contactSlots": {
+    "exhibition": null,
+    "hero": "contact-hero.PNG",
+    "studio": "contact-studio.PNG"
+  },
+  "content": {
+    "about_title": "About",
+    "about_name": "Antonio Pelizzeri",
+    "about_bio_1": "Architetto laureato presso la Facoltà di Architettura di Napoli nell'anno accademico 1982/1983. Già prima del conseguimento della laurea, ha maturato esperienze professionali collaborando con importanti studi di ingegneria di Napoli, partecipando alla progettazione di ville nel territorio campano.",
+    "about_bio_2": "Nel maggio 1985 ha conseguito l'abilitazione professionale e si è iscritto all'Ordine degli Architetti delle Province di Napoli e Isernia. Ha vinto il concorso a cattedra nella Regione Campania per la disciplina di Costruzioni e Tecnologia delle Costruzioni. Nel 2018 ha conseguito la cattedra di Disegno e Rilievo, insegnando Disegno e Storia dell'Arte presso i licei.",
+    "about_bio_3": "Parallelamente all'attività professionale, ha sempre coltivato un profondo interesse per la pittura, sviluppando una ricerca personale orientata verso il linguaggio grafico moderno e astratto. I segni geometrici si muovono nella solitudine di uno spazio vuoto, legati tra loro come lettere che comunicano agli altri il proprio io. Il colore è l'altro grande protagonista: effetti cromatici apparentemente contrapposti che danno origine a emozioni svariate.",
+    "studio_title": "STUDIO — ANTONIO PELIZZERI",
+    "studio_location": "Lo studio è situato a Napoli, Italia.",
+    "studio_cta": "Per informazioni e appuntamenti:",
+    "studio_email": "info@antoniopelizzeri.it",
+    "hero_subtitle": "Architettura · Pittura · Napoli",
+    "hero_name": "ANTONIO PELIZZERI",
+    "home_intro": "Architetto laureato presso la Facoltà di Architettura di Napoli, pittore e docente di Disegno e Storia dell'Arte. La sua pittura ha una forte e inconfondibile identità, fatta di segno e di colore. I suoi disegni nascono da un'improvvisa e irruente ricerca del segno — forme geometriche che avanzano in uno spazio vuoto, legate tra loro come parole di un discorso organico che comunica emozioni e stati d'animo.",
+    "quote_text": "I miei disegni nascono spesso da un'improvvisa e irruente ricerca del segno.",
+    "quote_author": "Antonio Pelizzeri",
+    "exhibition_label": "Current Exhibition",
+    "exhibition_title": "Layers of Silence",
+    "exhibition_details": "Galerie Neue Kunst, Düsseldorf\n15 March — 30 May 2026",
+    "footer_tagline": "Architetto e pittore con sede a Napoli, Italia. Docente di Disegno e Storia dell'Arte."
+  },
+  "exhibitions": [
+    {
+      "id": 1,
+      "year": "2018",
+      "title": "Cattedra di Disegno e Rilievo — Docente di Disegno e Storia dell'Arte presso i Licei, Campania",
+      "sort_order": 1
+    },
+    {
+      "id": 2,
+      "year": "1985",
+      "title": "Abilitazione Professionale — Ordine degli Architetti, Province di Napoli e Isernia",
+      "sort_order": 2
+    },
+    {
+      "id": 3,
+      "year": "1985",
+      "title": "Concorso a Cattedra, Regione Campania — Costruzioni e Tecnologia delle Costruzioni",
+      "sort_order": 3
+    },
+    {
+      "id": 4,
+      "year": "1982–83",
+      "title": "Laurea in Architettura — Facoltà di Architettura di Napoli",
+      "sort_order": 4
+    },
+    {
+      "id": 5,
+      "year": "Tesi",
+      "title": "Progettazione di un centro turistico a Marina di Tricase, relatore Arch. Antonio Rossetti",
+      "sort_order": 5
+    },
+    {
+      "id": 6,
+      "year": "Ricerca",
+      "title": "Pittura e design di arredo — ricerca personale nel linguaggio grafico moderno e astratto",
+      "sort_order": 6
+    }
+  ]
+}

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Studio — Antonio Pelizzeri</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <!-- CURSOR -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <!-- PAGE TRANSITION -->
+    <div class="page-transition" id="pageTransition"></div>
+
+    <!-- SCROLL PROGRESS BAR -->
+    <div class="scroll-progress-bar" id="scrollBar"></div>
+
+    <!-- GRAIN TEXTURE -->
+    <div class="grain"></div>
+
+    <!-- LOADER -->
+    <div class="page-loader">
+        <div class="loader-text">
+            <span style="animation-delay:0s">S</span><span style="animation-delay:0.06s">T</span><span
+                style="animation-delay:0.12s">U</span><span style="animation-delay:0.18s">D</span><span
+                style="animation-delay:0.24s">I</span><span style="animation-delay:0.3s">O</span>
+        </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">A. PELIZZERI</a>
+        <div class="nav-links">
+            <a href="index.html" data-i18n="nav-home">Home</a>
+            <a href="work.html" data-i18n="nav-work">Work</a>
+            <a href="installation.html" data-i18n="nav-installation">Installation</a>
+            <a href="studio.html" class="active" data-i18n="nav-studio">Studio</a>
+            <a href="about.html" data-i18n="nav-about">About</a>
+            <a href="index.html#contact" data-i18n="nav-contact">Contact</a>
+        </div>
+        <div class="lang-switch">
+            <button class="lang-btn" data-lang="it" onclick="setLang('it')">IT</button>
+            <span class="lang-sep">|</span>
+            <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+        </div>
+        <button class="nav-admin-btn" onclick="openAdminSidebar()" data-i18n="nav-login">Login</button>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" onclick="toggleMenu()" data-i18n="nav-home">Home</a>
+        <a href="work.html" onclick="toggleMenu()" data-i18n="nav-work">Work</a>
+        <a href="installation.html" onclick="toggleMenu()" data-i18n="nav-installation">Installation</a>
+        <a href="studio.html" onclick="toggleMenu()" data-i18n="nav-studio">Studio</a>
+        <a href="about.html" onclick="toggleMenu()" data-i18n="nav-about">About</a>
+        <a href="index.html#contact" onclick="toggleMenu()" data-i18n="nav-contact">Contact</a>
+    </div>
+
+    <!-- STUDIO HERO -->
+    <section class="hero">
+        <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=1800&auto=format&fit=crop"
+            alt="Studio" />
+        <div class="hero-text">
+            <p class="hero-subtitle">Napoli, Italia</p>
+            <h1>LO STUDIO</h1>
+        </div>
+    </section>
+
+    <!-- STUDIO INTRO -->
+    <section class="studio-page-intro">
+        <div class="sp-intro-inner reveal">
+            <span class="section-label">The Workspace</span>
+            <h2>Dove Nasce Tutto</h2>
+            <p>Lo studio è l'universo di Antonio Pelizzeri — uno spazio di riflessione e creazione dove l'architettura
+                incontra la pittura. Qui ogni opera prende forma attraverso cicli alterni di studio culturale e
+                produzione pittorica intensa, in una ricerca interiore in continua evoluzione.</p>
+        </div>
+    </section>
+
+    <!-- STUDIO LARGE IMAGE -->
+    <section class="studio-full img-wrap">
+        <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=1800&auto=format&fit=crop"
+            alt="Studio Interior" />
+    </section>
+
+    <!-- STUDIO DETAILS SPLIT -->
+    <section class="studio-split">
+        <div class="sp-text reveal-left">
+            <span class="section-label" data-i18n="studio-materials-label">Materiali &amp; Metodi</span>
+            <h2 data-i18n="studio-lang-h2">Il Linguaggio del Segno</h2>
+            <p data-i18n="studio-p1">La ricerca artistica di Antonio nasce da “un'improvvisa e irruente ricerca del segno”. Il colore è l'altro grande protagonista: effetti cromatici apparentemente confusi e contrapposti che danno origine a emozioni svariate. La tecnica attira chi guarda e lo porta a porsi interrogativi profondi.</p>
+            <p data-i18n-html="studio-p2-html">Negli spazi vuoti del dipinto si intravedono pieni e vuoti: un tentativo di contatto tra le forme che cercano un intimo legame, rimanendo sospese in una scala temporale e creando un ponte verso un luogo immaginario chiamato <em>Altrove</em>.</p>
+        </div>
+        <div class="sp-img img-wrap reveal-right">
+            <img src="https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=900&auto=format&fit=crop"
+                alt="Artist working" />
+        </div>
+    </section>
+
+    <!-- STUDIO GRID PHOTOS -->
+    <section class="studio-grid-section">
+        <div class="sp-grid-header reveal">
+            <span class="section-label" data-i18n="studio-inside-label">Dentro lo Studio</span>
+        </div>
+        <div class="sp-photo-grid">
+            <div class="sp-photo sp-photo-large img-wrap reveal delay-1">
+                <img src="https://images.unsplash.com/photo-1504644168849-b0e7e9a6b69b?w=1000&auto=format&fit=crop"
+                    alt="Studio Detail 1" />
+            </div>
+            <div class="sp-photo img-wrap reveal delay-2">
+                <img src="https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=600&auto=format&fit=crop"
+                    alt="Studio Detail 2" />
+            </div>
+            <div class="sp-photo img-wrap reveal delay-3">
+                <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=600&auto=format&fit=crop"
+                    alt="Studio Detail 3" />
+            </div>
+            <div class="sp-photo img-wrap reveal delay-2">
+                <img src="https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=600&auto=format&fit=crop"
+                    alt="Studio Detail 4" />
+            </div>
+            <div class="sp-photo sp-photo-large img-wrap reveal delay-3">
+                <img src="https://images.unsplash.com/photo-1549887534-1541e9326642?w=1000&auto=format&fit=crop"
+                    alt="Studio Detail 5" />
+            </div>
+            <div class="sp-photo img-wrap reveal delay-4">
+                <img src="https://images.unsplash.com/photo-1515405295579-ba7b45403062?w=600&auto=format&fit=crop"
+                    alt="Studio Detail 6" />
+            </div>
+        </div>
+    </section>
+
+    <!-- STUDIO PROCESS STEPS -->
+    <section class="process-steps">
+        <div class="ps-header reveal">
+            <span class="section-label" data-i18n="studio-process-label">Come Nasce un'Opera</span>
+            <h2 data-i18n="studio-process-h2">Il Processo</h2>
+        </div>
+        <div class="ps-steps">
+            <div class="ps-step reveal delay-1">
+                <span class="ps-num">01</span>
+                <h3 data-i18n="ps-step-1-h3">Studio e Riflessione</h3>
+                <p data-i18n="ps-step-1-p">Periodi di studio culturale e analisi interiore. La composizione nasce da un impulso profondo, non dalla logica.</p>
+            </div>
+            <div class="ps-step reveal delay-2">
+                <span class="ps-num">02</span>
+                <h3 data-i18n="ps-step-2-h3">Ricerca del Segno</h3>
+                <p data-i18n="ps-step-2-p">Il segno emerge improvviso e irruente. Forme geometriche che avanzano nello spazio vuoto come lettere di un discorso organico.</p>
+            </div>
+            <div class="ps-step reveal delay-3">
+                <span class="ps-num">03</span>
+                <h3 data-i18n="ps-step-3-h3">Gesto Pittorico</h3>
+                <p data-i18n="ps-step-3-p">Il colore viene steso con pennelli ampi e spatole. La velocità e l'intuizione contano. Il dipinto è mediato internamente, non pensato.</p>
+            </div>
+            <div class="ps-step reveal delay-4">
+                <span class="ps-num">04</span>
+                <h3 data-i18n="ps-step-4-h3">L'Elemento Figurativo</h3>
+                <p data-i18n="ps-step-4-p">A volte un elemento reale — un treno, una macchina — entra esplodendo nel segno astratto, ricordandoci che non possiamo fuggire dal mondo concreto.</p>
+            </div>
+            <div class="ps-step reveal delay-5">
+                <span class="ps-num">05</span>
+                <h3 data-i18n="ps-step-5-h3">Opera Compiuta</h3>
+                <p data-i18n="ps-step-5-p">La superficie finale custodisce tutto il percorso. Il ciclo si chiude, ma la ricerca interiore continua la sua evoluzione.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FULL WIDTH DARK IMAGE -->
+    <section class="fullwidth-img img-wrap">
+        <img src="https://images.unsplash.com/photo-1504714146340-959ca07e1f38?w=1800&auto=format&fit=crop"
+            alt="Studio Night" />
+    </section>
+
+    <!-- VISIT / CONTACT SECTION -->
+    <section class="studio-visit reveal">
+        <div class="sv-inner">
+            <span class="section-label" data-i18n="studio-visit-label">Visita lo Studio</span>
+            <h2 data-i18n="studio-visit-h2">Su Appuntamento</h2>
+            <p data-i18n-html="studio-visit-p-html">Lo studio accoglie collezionisti, curatori e richieste serie.<br />Scrivici per organizzare una visita.</p>
+            <div class="sv-contact">
+                <div class="sv-item">
+                    <span data-i18n="sv-location-label">Sede</span>
+                    <p data-i18n="sv-location-val">Napoli, Italia</p>
+                </div>
+                <div class="sv-item">
+                    <span data-i18n="sv-email-label">Email</span>
+                    <p><a href="mailto:info@antoniopelizzeri.it">info@antoniopelizzeri.it</a></p>
+                </div>
+                <div class="sv-item">
+                    <span data-i18n="sv-phone-label">Telefono</span>
+                    <p data-i18n="sv-phone-val">Su appuntamento</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer reveal">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="footer-logo">A. PELIZZERI</span>
+                <p data-i18n="footer-tagline">Architetto e pittore con sede a Napoli, Italia. Docente di Disegno e Storia dell'Arte.</p>
+            </div>
+            <div class="footer-nav">
+                <h4 data-i18n="footer-contact-h">Contatto</h4>
+                <a href="mailto:info@antoniopelizzeri.it">info@antoniopelizzeri.it</a>
+                <p class="footer-address">Napoli, Italia</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p data-i18n="footer-copyright">&copy; 2026 Antonio Pelizzeri. Tutti i diritti riservati.</p>
+            <p data-i18n="footer-impressum">Impressum</p>
+        </div>
+    </footer>
+
+    <!-- BACK TO TOP -->
+    <button class="back-to-top" id="backTop" aria-label="Back to top">&#8593;</button>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">&times;</button>
+        <img id="lightboxImg" src="" alt="" />
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+
+    <script src="i18n.js"></script>
+    <script src="animations.js"></script>
+    <script>
+        // Dynamic gallery: loads uploaded images from manifest.json
+        (async () => {
+            try {
+                const m = await fetch('images/manifest.json?t=' + Date.now()).then(r => r.ok ? r.json() : null);
+                const imgs = m && m.studio && m.studio.filter(f => !/^test\./.test(f));
+                if (!imgs || !imgs.length) return;
+                // Replace all studio images in sequence
+                const targets = document.querySelectorAll('.hero img, .studio-full img, .sp-img img, .sp-photo-grid img');
+                targets.forEach((img, i) => {
+                    img.src = 'images/studio/' + imgs[i % imgs.length];
+                });
+            } catch (e) { }
+        })();
+    </script>
+
+</body>
+
+</html>

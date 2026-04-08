@@ -1,0 +1,17 @@
+{
+  "name": "pelizzeri-website",
+  "version": "1.0.0",
+  "description": "Antonio Pelizzeri — Architetto e Pittore",
+  "main": "admin/server.js",
+  "scripts": {
+    "start": "node admin/server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.8.0",
+    "express": "^4.18.2",
+    "multer": "^2.1.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

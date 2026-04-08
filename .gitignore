@@ -1,0 +1,15 @@
+# Local Netlify folder
+.netlify
+
+# Dependencies
+node_modules/
+admin/node_modules/
+
+# Database (Railway mein fresh start)
+*.db
+
+# Logs
+*.log
+
+# OS
+.DS_Store

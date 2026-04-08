@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Antonio Pelizzeri — Architetto e Pittore</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <!-- CURSOR -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <!-- PAGE TRANSITION -->
+    <div class="page-transition" id="pageTransition"></div>
+
+    <!-- SCROLL PROGRESS BAR -->
+    <div class="scroll-progress-bar" id="scrollBar"></div>
+
+    <!-- GRAIN TEXTURE -->
+    <div class="grain"></div>
+
+    <!-- LOADER -->
+    <div class="page-loader">
+        <div class="loader-text">
+            <span style="animation-delay:0s">A</span><span style="animation-delay:0.05s">R</span><span
+                style="animation-delay:0.1s">T</span><span style="animation-delay:0.15s">I</span><span
+                style="animation-delay:0.2s">S</span><span style="animation-delay:0.25s">T</span>
+        </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">A. PELIZZERI</a>
+        <div class="nav-links">
+            <a href="index.html" class="active" data-i18n="nav-home">Home</a>
+            <a href="work.html" data-i18n="nav-work">Work</a>
+            <a href="installation.html" data-i18n="nav-installation">Installation</a>
+            <a href="studio.html" data-i18n="nav-studio">Studio</a>
+            <a href="about.html" data-i18n="nav-about">About</a>
+            <a href="#contact" data-i18n="nav-contact">Contact</a>
+        </div>
+        <div class="lang-switch">
+            <button class="lang-btn" data-lang="it" onclick="setLang('it')">IT</button>
+            <span class="lang-sep">|</span>
+            <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+        </div>
+        <button class="nav-admin-btn" onclick="openAdminSidebar()" data-i18n="nav-login">Login</button>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" onclick="toggleMenu()" data-i18n="nav-home">Home</a>
+        <a href="work.html" onclick="toggleMenu()" data-i18n="nav-work">Work</a>
+        <a href="installation.html" onclick="toggleMenu()" data-i18n="nav-installation">Installation</a>
+        <a href="studio.html" onclick="toggleMenu()" data-i18n="nav-studio">Studio</a>
+        <a href="about.html" onclick="toggleMenu()" data-i18n="nav-about">About</a>
+        <a href="#contact" onclick="toggleMenu()" data-i18n="nav-contact">Contact</a>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=1800&auto=format&fit=crop"
+            alt="Hero Artwork" />
+        <div class="hero-text">
+            <p class="hero-subtitle typewriter-text" data-text="Architettura · Pittura · Napoli" data-i18n-tw="idx-hero-sub-text" id="idx-hero-sub"></p>
+            <h1 id="idx-hero-name"><span class="hero-name-first">ANTONIO</span> PELIZZERI</h1>
+            <a href="work.html" class="btn" data-i18n="idx-hero-btn">VIEW WORK</a>
+        </div>
+    </section>
+
+    <!-- ABOUT INTRO -->
+    <section class="intro">
+        <div class="intro-inner reveal">
+            <h2 class="split-word">Antonio Pelizzeri</h2>
+            <p id="idx-intro" data-i18n="idx-intro">
+                Architetto laureato presso la Facoltà di Architettura di Napoli, pittore e docente di Disegno
+                e Storia dell'Arte. La sua pittura ha una forte e inconfondibile identità, fatta di segno
+                e di colore. I suoi disegni nascono da un'improvvisa e irruente ricerca del segno —
+                forme geometriche che avanzano in uno spazio vuoto, legate tra loro come parole di un discorso
+                organico che comunica emozioni e stati d'animo.
+            </p>
+        </div>
+    </section>
+
+    <!-- MARQUEE STRIP -->
+    <div class="marquee-strip">
+        <div class="marquee-track">
+            <span>Pittura</span><span class="dot">&bull;</span>
+            <span>Segno</span><span class="dot">&bull;</span>
+            <span>Colore</span><span class="dot">&bull;</span>
+            <span>Disegno</span><span class="dot">&bull;</span>
+            <span>Geometria</span><span class="dot">&bull;</span>
+            <span>Napoli</span><span class="dot">&bull;</span>
+            <span>Contemporaneo</span><span class="dot">&bull;</span>
+            <span>Architettura</span><span class="dot">&bull;</span>
+            <!-- duplicate for seamless loop -->
+            <span>Pittura</span><span class="dot">&bull;</span>
+            <span>Segno</span><span class="dot">&bull;</span>
+            <span>Colore</span><span class="dot">&bull;</span>
+            <span>Disegno</span><span class="dot">&bull;</span>
+            <span>Geometria</span><span class="dot">&bull;</span>
+            <span>Napoli</span><span class="dot">&bull;</span>
+            <span>Contemporaneo</span><span class="dot">&bull;</span>
+            <span>Architettura</span><span class="dot">&bull;</span>
+        </div>
+    </div>
+
+    <!-- FEATURED WORK -->
+    <section class="featured">
+        <div class="featured-grid">
+            <div class="featured-item img-wrap reveal delay-1">
+                <img src="https://images.unsplash.com/photo-1579762715118-a6f1d4b934f1?w=1200&auto=format&fit=crop"
+                    alt="Artwork 1" />
+            </div>
+            <div class="featured-item img-wrap reveal delay-2">
+                <img src="https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&auto=format&fit=crop"
+                    alt="Artwork 2" />
+            </div>
+            <div class="featured-item img-wrap reveal delay-3">
+                <img src="https://images.unsplash.com/photo-1549490349-8643362247b5?w=800&auto=format&fit=crop"
+                    alt="Artwork 3" />
+            </div>
+            <div class="featured-item img-wrap reveal delay-2">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop"
+                    alt="Artwork 4" />
+            </div>
+            <div class="featured-item img-wrap reveal delay-3">
+                <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1200&auto=format&fit=crop"
+                    alt="Artwork 5" />
+            </div>
+            <div class="featured-item img-wrap reveal delay-4">
+                <img src="https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?w=800&auto=format&fit=crop"
+                    alt="Artwork 6" />
+            </div>
+        </div>
+    </section>
+
+    <!-- MONDRIAN BENTO GRID -->
+    <section class="mondrian-section reveal">
+        <div class="mondrian-grid">
+            <div class="mondrian-item m-red m-img reveal delay-1">
+                <img src="images/work/b1.jpg" alt="Artwork" />
+            </div>
+            <div class="mondrian-item m-yellow reveal delay-2">
+                <img src="images/work/b2.jpg" alt="Artwork" />
+            </div>
+            <div class="mondrian-item m-white m-img reveal delay-3">
+                <img src="images/work/b3.jpg" alt="Artwork" />
+            </div>
+            <div class="mondrian-item m-blue reveal delay-1">
+                <img src="images/work/b4.jpg" alt="Artwork" />
+            </div>
+            <div class="mondrian-item m-white m-img reveal delay-2">
+                <img src="images/work/b5.jpg" alt="Artwork" />
+            </div>
+            <div class="mondrian-item m-red reveal delay-3">
+                <img src="images/work/b6.jpg" alt="Artwork" />
+            </div>
+            <div class="mondrian-item m-yellow m-img reveal delay-4">
+                <img src="images/work/b7.jpg" alt="Artwork" />
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS / COUNTERS -->
+    <div class="stats-section">
+        <div class="stat-item reveal delay-1">
+            <span class="stat-num counter-num" data-target="40">0</span>
+            <span class="stat-label" data-i18n="stat-label-1">Anni di Pratica</span>
+        </div>
+        <div class="stat-item reveal delay-2">
+            <span class="stat-num counter-num" data-target="2">0</span>
+            <span class="stat-label" data-i18n="stat-label-2">Discipline (Architettura &amp; Arte)</span>
+        </div>
+        <div class="stat-item reveal delay-3">
+            <span class="stat-num counter-num" data-target="280">0</span>
+            <span class="stat-label" data-i18n="stat-label-3">Artworks Created</span>
+        </div>
+    </div>
+
+    <!-- FULL WIDTH IMAGE -->
+    <section class="fullwidth-img img-wrap">
+        <img src="https://images.unsplash.com/photo-1501084817091-a4f3d1d19e07?w=1800&auto=format&fit=crop"
+            alt="Studio" />
+    </section>
+
+    <!-- ===== SECTION 1: BIG QUOTE ===== -->
+    <section class="quote-section">
+        <div class="quote-inner reveal">
+            <span class="quote-mark">&ldquo;</span>
+            <blockquote class="split-word" id="idx-quote" data-i18n-split="idx-quote">
+                I miei disegni nascono spesso da un'improvvisa e irruente ricerca del segno.
+            </blockquote>
+            <cite id="idx-quote-author" data-i18n="idx-quote-author">— Antonio Pelizzeri</cite>
+        </div>
+    </section>
+
+    <!-- ===== SECTION 2: PROCESS — TEXT + IMAGE ===== -->
+    <section class="process-section">
+        <div class="process-text reveal-left">
+            <span class="section-label" data-i18n="process-label">Il Processo</span>
+            <h2 data-i18n-html="process-h2-html">Dalla Ricerca<br />al Segno Compiuto</h2>
+            <p data-i18n="process-p1">Ogni opera nasce da un'attenta analisi interiore — un impulso, un momento di ricerca del segno. Nella
+                ricerca della forma, della sintesi e dell'armonia, Antonio alterna periodi di studio e riflessione
+                culturale a cicli di produzione pittorica intensa. Colore, gesto e segno diventano un linguaggio
+                personale.</p>
+            <p data-i18n-html="process-p2-html">I segni geometrici si muovono nella solitudine di uno spazio vuoto: avanzano, si stabilizzano, si legano
+                tra loro come lettere di parole che comunicano agli altri il proprio <em>io</em>. A volte un elemento
+                figurativo — un treno, una macchina — entra esplodendo nel segno astratto, ricordandoci che non possiamo
+                fuggire dal mondo reale.</p>
+            <a href="about.html" class="btn-dark" data-i18n="process-btn">Scopri di più</a>
+        </div>
+        <div class="process-images reveal-right">
+            <div class="process-img-top img-wrap">
+                <img src="https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=800&auto=format&fit=crop"
+                    alt="Process 1" />
+            </div>
+            <div class="process-img-bottom img-wrap">
+                <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800&auto=format&fit=crop"
+                    alt="Process 2" />
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION 3: HORIZONTAL SCROLL WORKS ===== -->
+    <section class="hscroll-section">
+        <div class="hscroll-header reveal">
+            <span class="section-label" data-i18n="hscroll-label">Opere Scelte</span>
+            <h2 data-i18n="hscroll-h2">Serie Recenti</h2>
+        </div>
+        <div class="hscroll-track-wrap">
+            <div class="hscroll-track" id="hscrollTrack">
+                <div class="hscroll-item img-wrap">
+                    <img src="https://images.unsplash.com/photo-1549887534-1541e9326642?w=700&auto=format&fit=crop"
+                        alt="Series 1" />
+                    <div class="hscroll-caption"><span>No. 01</span>Metamorphosis</div>
+                </div>
+                <div class="hscroll-item img-wrap">
+                    <img src="https://images.unsplash.com/photo-1504714146340-959ca07e1f38?w=700&auto=format&fit=crop"
+                        alt="Series 2" />
+                    <div class="hscroll-caption"><span>No. 02</span>Strata</div>
+                </div>
+                <div class="hscroll-item img-wrap">
+                    <img src="https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=700&auto=format&fit=crop"
+                        alt="Series 3" />
+                    <div class="hscroll-caption"><span>No. 03</span>Resonance</div>
+                </div>
+                <div class="hscroll-item img-wrap">
+                    <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=700&auto=format&fit=crop"
+                        alt="Series 4" />
+                    <div class="hscroll-caption"><span>No. 04</span>Friction</div>
+                </div>
+                <div class="hscroll-item img-wrap">
+                    <img src="https://images.unsplash.com/photo-1515405295579-ba7b45403062?w=700&auto=format&fit=crop"
+                        alt="Series 5" />
+                    <div class="hscroll-caption"><span>No. 05</span>Silence</div>
+                </div>
+            </div>
+            <div class="hscroll-hint" data-i18n="hscroll-hint">← Trascina per esplorare →</div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION 4: PRESS / RECOGNITION ===== -->
+    <section class="press-section">
+        <div class="press-label reveal">
+            <span class="section-label" data-i18n="press-label">Pubblicazioni</span>
+        </div>
+        <div class="press-logos">
+            <div class="press-item reveal delay-1">Art Forum</div>
+            <div class="press-item reveal delay-2">Monopol</div>
+            <div class="press-item reveal delay-3">Frieze</div>
+            <div class="press-item reveal delay-4">Artsy</div>
+            <div class="press-item reveal delay-5">Spiegel Kultur</div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION 5: TESTIMONIALS ===== -->
+    <section class="testimonials-section">
+        <div class="testi-inner">
+            <span class="section-label reveal" data-i18n="testi-label">Collezionisti &amp; Critici</span>
+            <div class="testi-grid">
+                <div class="testi-card reveal delay-1">
+                    <p data-i18n="testi-1">"La pittura di A. Pelizzeri è caratterizzata da segni decisi con forti sintesi geometriche, finalizzati alla trasmissione di emozioni e stati d'animo. Segni come parole, pittura come linguaggio."</p>
+                    <cite>— Dott. Prof. L. De Benedetti</cite>
+                </div>
+                <div class="testi-card reveal delay-2">
+                    <p data-i18n="testi-2">"Nella sua pratica artistica sente di poter risolvere il proprio enigma personale semplicemente con le cose che ama di più: colore, gesto, segno."</p>
+                    <cite>— Arch. M.C.</cite>
+                </div>
+                <div class="testi-card reveal delay-3">
+                    <p data-i18n="testi-3">"Il suo è un dipinto non pensato, ma mediato internamente; fuori programma, ma sempre coerente con una ricerca interiore in continua evoluzione."</p>
+                    <cite>— Arch. M.C.</cite>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION 6: LATEST EXHIBITION FULLWIDTH ===== -->
+    <section class="exhibition-feature">
+        <div class="exhib-img img-wrap reveal-scale">
+            <img src="https://images.unsplash.com/photo-1536924940846-227afb31e2a5?w=1800&auto=format&fit=crop"
+                alt="Exhibition" />
+        </div>
+        <div class="exhib-overlay reveal">
+            <span class="section-label" id="idx-exh-label">Current Exhibition</span>
+            <h2 id="idx-exh-title">Layers of Silence</h2>
+            <p id="idx-exh-details">Galerie Neue Kunst, Düsseldorf<br />15 March — 30 May 2026</p>
+            <a href="work.html" class="btn" data-i18n="idx-exh-btn">Esplora i Lavori</a>
+        </div>
+    </section>
+
+    <!-- ===== SECTION 7: NEWSLETTER CTA ===== -->
+    <section class="newsletter-section">
+        <div class="newsletter-inner reveal">
+            <span class="section-label" data-i18n="newsletter-label">Resta Connesso</span>
+            <h2 data-i18n="newsletter-h2">Unisciti allo Studio</h2>
+            <p data-i18n="newsletter-p">Ricevi aggiornamenti su nuove opere, mostre in programma e notizie dallo studio.</p>
+            <form class="newsletter-form" onsubmit="handleSubscribe(event)">
+                <input type="email" placeholder="Il tuo indirizzo email" data-i18n-placeholder="newsletter-placeholder" required />
+                <button type="submit" data-i18n="newsletter-btn">Iscriviti</button>
+            </form>
+            <p class="newsletter-thanks" id="newsletterThanks" data-i18n="newsletter-thanks">Grazie per l'iscrizione.</p>
+        </div>
+    </section>
+
+    <!-- STUDIO / CONTACT -->
+    <section class="studio" id="contact">
+        <div class="studio-inner reveal-left">
+            <h2 id="idx-studio-title">STUDIO — ANTONIO PELIZZERI</h2>
+            <p id="idx-studio-location">Lo studio è situato a Napoli, Italia.</p>
+            <p id="idx-studio-cta">Per informazioni e appuntamenti:</p>
+            <p><a id="idx-studio-email" href="mailto:info@antoniopelizzeri.it">info@antoniopelizzeri.it</a></p>
+        </div>
+        <div class="studio-img img-wrap reveal-right">
+            <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=1200&auto=format&fit=crop"
+                alt="Studio" />
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer reveal">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="footer-logo">A. PELIZZERI</span>
+                <p id="idx-footer-tagline" data-i18n="footer-tagline">Architetto e pittore con sede a Napoli, Italia. Docente di Disegno e Storia
+                    dell'Arte.</p>
+            </div>
+            <div class="footer-nav">
+                <h4 data-i18n="footer-contact-h">Contatto</h4>
+                <a href="mailto:info@antoniopelizzeri.it">info@antoniopelizzeri.it</a>
+                <p class="footer-address">Napoli, Italia</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p data-i18n="footer-copyright">&copy; 2026 Antonio Pelizzeri. Tutti i diritti riservati.</p>
+            <p data-i18n="footer-impressum">Impressum</p>
+        </div>
+    </footer>
+
+    <!-- BACK TO TOP -->
+    <button class="back-to-top" id="backTop" aria-label="Back to top">&#8593;</button>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">&times;</button>
+        <img id="lightboxImg" src="" alt="" />
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+
+    <script src="i18n.js"></script>
+    <script src="animations.js"></script>
+    <script>
+        function handleSubscribe(e) {
+            e.preventDefault();
+            document.querySelector('.newsletter-form').style.display = 'none';
+            document.getElementById('newsletterThanks').style.display = 'block';
+        }
+
+        // Dynamic images + content from manifest
+        (async () => {
+            try {
+                const m = await fetch('images/manifest.json?t=' + Date.now()).then(r => r.ok ? r.json() : null);
+                if (!m) return;
+                const cacheKey = Date.now();
+                const workImgs = m.work && m.work.filter(Boolean);
+                const installationImgs = m.installation && m.installation.filter(Boolean);
+                const studioImgs = m.studio && m.studio.filter(Boolean);
+                // Contact image slots
+                const s = m.contactSlots;
+                if (s) {
+                    if (s.hero) { const el = document.querySelector('.hero > img'); if (el) el.src = 'images/contact/' + s.hero; }
+                    if (s.exhibition) { const el = document.querySelector('.exhib-img img'); if (el) el.src = 'images/contact/' + s.exhibition; }
+                    if (s.studio) { const el = document.querySelector('.studio-img img'); if (el) el.src = 'images/contact/' + s.studio; }
+                }
+                // Work images on home page
+                if (workImgs && workImgs.length) {
+                    document.querySelectorAll('.featured-item').forEach((item, i) => {
+                        const img = item.querySelector('img');
+                        const file = workImgs[i];
+                        if (!img) return;
+                        if (!file) {
+                            item.style.display = 'none';
+                            return;
+                        }
+                        item.style.display = '';
+                        img.src = 'images/work/' + file + '?t=' + cacheKey;
+                        img.alt = 'Work ' + (i + 1);
+                    });
+
+                    document.querySelectorAll('.hscroll-item').forEach((item, i) => {
+                        const file = workImgs[i];
+                        const img = item.querySelector('img');
+                        const caption = item.querySelector('.hscroll-caption');
+                        if (!file) {
+                            item.style.display = 'none';
+                            return;
+                        }
+                        item.style.display = '';
+                        const label = file.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                        if (img) {
+                            img.src = 'images/work/' + file + '?t=' + cacheKey;
+                            img.alt = label;
+                        }
+                        if (caption) {
+                            caption.innerHTML = '<span>No. ' + String(i + 1).padStart(2, '0') + '</span>' + label;
+                        }
+                    });
+                }
+                if (installationImgs && installationImgs.length) {
+                    const installationTargets = [
+                        '.fullwidth-img img',
+                        '.process-img-top img',
+                        '.process-img-bottom img',
+                        '.exhib-img img'
+                    ];
+
+                    installationTargets.forEach((selector, i) => {
+                        const file = installationImgs[i];
+                        const img = document.querySelector(selector);
+                        if (!file || !img) return;
+                        img.src = 'images/installation/' + file + '?t=' + cacheKey;
+                        img.alt = 'Installation ' + (i + 1);
+                    });
+                }
+                if (studioImgs && studioImgs.length) {
+                    const studioImg = document.querySelector('.studio-img img');
+                    if (studioImg) {
+                        studioImg.src = 'images/studio/' + studioImgs[0] + '?t=' + cacheKey;
+                        studioImg.alt = 'Studio';
+                    }
+                }
+                // Text content
+                const c = m.content;
+                if (c) {
+                    if (c.hero_name) { const el = document.getElementById('idx-hero-name'); if (el) el.textContent = c.hero_name; }
+                    if (c.hero_subtitle) { const el = document.getElementById('idx-hero-sub'); if (el) el.setAttribute('data-text', c.hero_subtitle); }
+                    if (c.home_intro) { const el = document.getElementById('idx-intro'); if (el) el.textContent = c.home_intro; }
+                    if (c.quote_text) { const el = document.getElementById('idx-quote'); if (el) el.textContent = c.quote_text; }
+                    if (c.quote_author) { const el = document.getElementById('idx-quote-author'); if (el) el.textContent = '— ' + c.quote_author; }
+                    if (c.exhibition_label) { const el = document.getElementById('idx-exh-label'); if (el) el.textContent = c.exhibition_label; }
+                    if (c.exhibition_title) { const el = document.getElementById('idx-exh-title'); if (el) el.textContent = c.exhibition_title; }
+                    if (c.exhibition_details) { const el = document.getElementById('idx-exh-details'); if (el) el.innerHTML = c.exhibition_details.replace(/\n/g, '<br/>'); }
+                    if (c.studio_title) { const el = document.getElementById('idx-studio-title'); if (el) el.textContent = c.studio_title; }
+                    if (c.studio_location) { const el = document.getElementById('idx-studio-location'); if (el) el.textContent = c.studio_location; }
+                    if (c.studio_cta) { const el = document.getElementById('idx-studio-cta'); if (el) el.textContent = c.studio_cta; }
+                    if (c.studio_email) { const el = document.getElementById('idx-studio-email'); if (el) { el.textContent = c.studio_email; el.href = 'mailto:' + c.studio_email; } }
+                    if (c.footer_tagline) { const el = document.getElementById('idx-footer-tagline'); if (el) el.textContent = c.footer_tagline; }
+                }
+            } catch (e) { }
+        })();
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About — Antonio Pelizzeri</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <!-- CURSOR -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <!-- PAGE TRANSITION -->
+    <div class="page-transition" id="pageTransition"></div>
+
+    <!-- SCROLL PROGRESS BAR -->
+    <div class="scroll-progress-bar" id="scrollBar"></div>
+
+    <!-- GRAIN TEXTURE -->
+    <div class="grain"></div>
+
+    <!-- LOADER -->
+    <div class="page-loader">
+        <div class="loader-text">
+            <span style="animation-delay:0s">A</span><span style="animation-delay:0.05s">B</span><span
+                style="animation-delay:0.1s">O</span><span style="animation-delay:0.15s">U</span><span
+                style="animation-delay:0.2s">T</span>
+        </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">A. PELIZZERI</a>
+        <div class="nav-links">
+            <a href="index.html" data-i18n="nav-home">Home</a>
+            <a href="work.html" data-i18n="nav-work">Work</a>
+            <a href="installation.html" data-i18n="nav-installation">Installation</a>
+            <a href="studio.html" data-i18n="nav-studio">Studio</a>
+            <a href="about.html" class="active" data-i18n="nav-about">About</a>
+            <a href="index.html#contact" data-i18n="nav-contact">Contact</a>
+        </div>
+        <div class="lang-switch">
+            <button class="lang-btn" data-lang="it" onclick="setLang('it')">IT</button>
+            <span class="lang-sep">|</span>
+            <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+        </div>
+        <button class="nav-admin-btn" onclick="openAdminSidebar()" data-i18n="nav-login">Login</button>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" onclick="toggleMenu()" data-i18n="nav-home">Home</a>
+        <a href="work.html" onclick="toggleMenu()" data-i18n="nav-work">Work</a>
+        <a href="installation.html" onclick="toggleMenu()" data-i18n="nav-installation">Installation</a>
+        <a href="studio.html" onclick="toggleMenu()" data-i18n="nav-studio">Studio</a>
+        <a href="about.html" onclick="toggleMenu()" data-i18n="nav-about">About</a>
+        <a href="index.html#contact" onclick="toggleMenu()" data-i18n="nav-contact">Contact</a>
+    </div>
+
+    <!-- ABOUT HERO -->
+    <section class="about-hero img-wrap">
+        <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=1800&auto=format&fit=crop"
+            alt="Artist Portrait" />
+    </section>
+
+    <!-- ABOUT CONTENT -->
+    <section class="about-content">
+        <div class="about-inner">
+
+            <div class="about-text reveal-left">
+                <h1 data-i18n="about-h1">Profilo</h1>
+                <h2 id="about-name">Antonio Pelizzeri</h2>
+                <p id="about-bio-1" data-i18n="about-bio-1">
+                    Architetto laureato presso la Facoltà di Architettura di Napoli nell'anno accademico
+                    1982/1983. Già prima del conseguimento della laurea, ha maturato esperienze professionali
+                    collaborando con importanti studi di ingegneria di Napoli, partecipando alla progettazione
+                    di ville nel territorio campano.
+                </p>
+                <p id="about-bio-2" data-i18n="about-bio-2">
+                    Nel maggio 1985 ha conseguito l'abilitazione professionale e si è iscritto all'Ordine degli
+                    Architetti delle Province di Napoli e Isernia. Ha vinto il concorso a cattedra nella Regione
+                    Campania per la disciplina di Costruzioni e Tecnologia delle Costruzioni. Nel 2018 ha
+                    conseguito la cattedra di Disegno e Rilievo, insegnando Disegno e Storia dell'Arte presso i licei.
+                </p>
+                <p id="about-bio-3" data-i18n-html="about-bio-3-html">
+                    Parallelamente all'attività professionale, ha sempre coltivato un profondo interesse per la
+                    pittura, sviluppando una ricerca personale orientata verso il <em>linguaggio grafico moderno
+                        e astratto</em>. I segni geometrici si muovono nella solitudine di uno spazio vuoto, legati
+                    tra loro come lettere che comunicano agli altri il proprio <em>io</em>.
+                    Il colore è l'altro grande protagonista: effetti cromatici apparentemente contrapposti
+                    che danno origine a emozioni svariate.
+                </p>
+            </div>
+
+            <div class="about-portrait img-wrap reveal-right">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=700&auto=format&fit=crop"
+                    alt="Artist" />
+            </div>
+
+        </div>
+    </section>
+
+    <!-- EXHIBITIONS -->
+    <section class="exhibitions">
+        <div class="exhibitions-inner">
+            <h2 class="reveal" data-i18n="about-exh-h2">Percorso Professionale</h2>
+            <ul id="about-exhibitions">
+                <li class="reveal delay-1" data-i18n-html="about-exh-1-html"><span>2018</span> — Cattedra di Disegno e Rilievo — Docente di Disegno e
+                    Storia dell'Arte presso i Licei, Campania</li>
+                <li class="reveal delay-2" data-i18n-html="about-exh-2-html"><span>1985</span> — Abilitazione Professionale — Ordine degli Architetti,
+                    Province di Napoli e Isernia</li>
+                <li class="reveal delay-3" data-i18n-html="about-exh-3-html"><span>1985</span> — Concorso a Cattedra, Regione Campania — Costruzioni e
+                    Tecnologia delle Costruzioni</li>
+                <li class="reveal delay-4" data-i18n-html="about-exh-4-html"><span>1982–83</span> — Laurea in Architettura — Facoltà di Architettura di
+                    Napoli</li>
+                <li class="reveal delay-5" data-i18n-html="about-exh-5-html"><span>Tesi</span> — Progettazione di un centro turistico a Marina di Tricase,
+                    relatore Arch. Antonio Rossetti</li>
+                <li class="reveal delay-6" data-i18n-html="about-exh-6-html"><span>Ricerca</span> — Pittura e design di arredo — ricerca personale nel
+                    linguaggio grafico moderno e astratto</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="studio" id="contact">
+        <div class="studio-inner reveal-left">
+            <h2 id="about-studio-title">STUDIO — ANTONIO PELIZZERI</h2>
+            <p id="about-studio-location" data-i18n="about-studio-location">Lo studio è situato a Napoli, Italia.</p>
+            <p id="about-studio-cta" data-i18n="about-studio-cta">Per informazioni e appuntamenti:</p>
+            <p><a id="about-studio-email" href="mailto:info@antoniopelizzeri.it">info@antoniopelizzeri.it</a></p>
+        </div>
+        <div class="studio-img img-wrap reveal-right">
+            <img src="https://images.unsplash.com/photo-1501084817091-a4f3d1d19e07?w=1200&auto=format&fit=crop"
+                alt="Studio" />
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer reveal">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="footer-logo">A. PELIZZERI</span>
+                <p data-i18n="footer-tagline">Architetto e pittore con sede a Napoli, Italia. Docente di Disegno e Storia dell'Arte.</p>
+                <a href="mailto:info@antoniopelizzeri.it">info@antoniopelizzeri.it</a>
+                <p class="footer-address">Napoli, Italia</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p data-i18n="footer-copyright">&copy; 2026 Antonio Pelizzeri. Tutti i diritti riservati.</p>
+            <p data-i18n="footer-impressum">Impressum</p>
+        </div>
+    </footer>
+
+    <!-- BACK TO TOP -->
+    <button class="back-to-top" id="backTop" aria-label="Back to top">&#8593;</button>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">&times;</button>
+        <img id="lightboxImg" src="" alt="" />
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+
+    <script src="i18n.js"></script>
+    <script src="animations.js"></script>
+    <script>
+        // Load about images + content from manifest
+        fetch('images/manifest.json?t=' + Date.now()).then(r => r.json()).then(m => {
+            // Image slots
+            const s = m && m.aboutSlots;
+            if (s) {
+                if (s.hero) { const el = document.querySelector('.about-hero img'); if (el) el.src = 'images/about/' + s.hero; }
+                if (s.portrait) { const el = document.querySelector('.about-portrait img'); if (el) el.src = 'images/about/' + s.portrait; }
+                if (s.studio) { const el = document.querySelector('.studio-img img'); if (el) el.src = 'images/about/' + s.studio; }
+            }
+            // Text content
+            const c = m && m.content;
+            if (c) {
+                if (c.about_name) { const el = document.getElementById('about-name'); if (el) el.textContent = c.about_name; }
+                if (c.about_bio_1) { const el = document.getElementById('about-bio-1'); if (el) el.textContent = c.about_bio_1; }
+                if (c.about_bio_2) { const el = document.getElementById('about-bio-2'); if (el) el.textContent = c.about_bio_2; }
+                if (c.about_bio_3) { const el = document.getElementById('about-bio-3'); if (el) el.textContent = c.about_bio_3; }
+                if (c.studio_title) { const el = document.getElementById('about-studio-title'); if (el) el.textContent = c.studio_title; }
+                if (c.studio_location) { const el = document.getElementById('about-studio-location'); if (el) el.textContent = c.studio_location; }
+                if (c.studio_cta) { const el = document.getElementById('about-studio-cta'); if (el) el.textContent = c.studio_cta; }
+                if (c.studio_email) {
+                    const el = document.getElementById('about-studio-email');
+                    if (el) { el.textContent = c.studio_email; el.href = 'mailto:' + c.studio_email; }
+                }
+            }
+            // Exhibitions
+            const exh = m && m.exhibitions;
+            if (exh && exh.length) {
+                const ul = document.getElementById('about-exhibitions');
+                if (ul) {
+                    ul.innerHTML = exh.map((e, i) =>
+                        `<li class="reveal delay-${Math.min(i + 1, 6)}"><span>${e.year}</span> — ${e.title}</li>`
+                    ).join('');
+                    // Re-observe newly created items (original observer already ran)
+                    const obs = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('visible');
+                                obs.unobserve(entry.target);
+                            }
+                        });
+                    }, { threshold: 0.1 });
+                    ul.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+                }
+            }
+        }).catch(() => { });
+    </script>
+
+</body>
+
+</html>

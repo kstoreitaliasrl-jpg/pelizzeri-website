@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Work — Antonio Pelizzeri</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <!-- CURSOR -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <!-- PAGE TRANSITION -->
+    <div class="page-transition" id="pageTransition"></div>
+
+    <!-- SCROLL PROGRESS BAR -->
+    <div class="scroll-progress-bar" id="scrollBar"></div>
+
+    <!-- GRAIN TEXTURE -->
+    <div class="grain"></div>
+
+    <!-- LOADER -->
+    <div class="page-loader">
+        <div class="loader-text">
+            <span style="animation-delay:0s">W</span><span style="animation-delay:0.05s">O</span><span
+                style="animation-delay:0.1s">R</span><span style="animation-delay:0.15s">K</span>
+        </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">A. PELIZZERI</a>
+        <div class="nav-links">
+            <a href="index.html" data-i18n="nav-home">Home</a>
+            <a href="work.html" class="active" data-i18n="nav-work">Work</a>
+            <a href="installation.html" data-i18n="nav-installation">Installation</a>
+            <a href="studio.html" data-i18n="nav-studio">Studio</a>
+            <a href="about.html" data-i18n="nav-about">About</a>
+            <a href="index.html#contact" data-i18n="nav-contact">Contact</a>
+        </div>
+        <div class="lang-switch">
+            <button class="lang-btn" data-lang="it" onclick="setLang('it')">IT</button>
+            <span class="lang-sep">|</span>
+            <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+        </div>
+        <button class="nav-admin-btn" onclick="openAdminSidebar()" data-i18n="nav-login">Login</button>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" onclick="toggleMenu()" data-i18n="nav-home">Home</a>
+        <a href="work.html" onclick="toggleMenu()" data-i18n="nav-work">Work</a>
+        <a href="installation.html" onclick="toggleMenu()" data-i18n="nav-installation">Installation</a>
+        <a href="studio.html" onclick="toggleMenu()" data-i18n="nav-studio">Studio</a>
+        <a href="about.html" onclick="toggleMenu()" data-i18n="nav-about">About</a>
+        <a href="index.html#contact" onclick="toggleMenu()" data-i18n="nav-contact">Contact</a>
+    </div>
+
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+        <h1 class="reveal" data-i18n="work-h1">LAVORI</h1>
+    </section>
+
+    <!-- CATEGORY GRID -->
+    <section class="category-grid">
+
+        <div class="category-card img-wrap reveal delay-1">
+                <div class="category-img">
+                    <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=900&auto=format&fit=crop"
+                        alt="Portrait" />
+                    <div class="category-overlay"><span data-i18n="cat-portrait">Ritratto</span></div>
+                </div>
+        </div>
+
+        <div class="category-card img-wrap reveal delay-2">
+                <div class="category-img">
+                    <img src="https://images.unsplash.com/photo-1579762715118-a6f1d4b934f1?w=900&auto=format&fit=crop"
+                        alt="Collage" />
+                    <div class="category-overlay"><span data-i18n="cat-collage">Collage</span></div>
+                </div>
+        </div>
+
+        <div class="category-card img-wrap reveal delay-3">
+                <div class="category-img">
+                    <img src="https://images.unsplash.com/photo-1549490349-8643362247b5?w=900&auto=format&fit=crop"
+                        alt="Abstract" />
+                    <div class="category-overlay"><span data-i18n="cat-abstract">Astratto</span></div>
+                </div>
+        </div>
+
+    </section>
+
+    <!-- ALL WORKS GALLERY -->
+    <section class="work-gallery">
+        <div class="gallery-grid">
+            <div class="gallery-item reveal delay-1"><img
+                    src="https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=700&auto=format&fit=crop"
+                    alt="Work 1" /><span class="img-caption">Untitled I</span></div>
+            <div class="gallery-item reveal delay-2"><img
+                    src="https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?w=700&auto=format&fit=crop"
+                    alt="Work 2" /><span class="img-caption">Untitled II</span></div>
+            <div class="gallery-item reveal delay-3"><img
+                    src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=700&auto=format&fit=crop"
+                    alt="Work 3" /><span class="img-caption">Untitled III</span></div>
+            <div class="gallery-item reveal delay-2"><img
+                    src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=700&auto=format&fit=crop"
+                    alt="Work 4" /><span class="img-caption">Untitled IV</span></div>
+            <div class="gallery-item reveal delay-3"><img
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=700&auto=format&fit=crop"
+                    alt="Work 5" /><span class="img-caption">Untitled V</span></div>
+            <div class="gallery-item reveal delay-4"><img src="https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=700&auto=format&fit=crop" alt="Work 6" /><span
+                    class="img-caption">Untitled VI</span></div>
+            <div class="gallery-item reveal delay-1"><img
+                    src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=700&auto=format&fit=crop"
+                    alt="Work 7" /><span class="img-caption">Untitled VII</span></div>
+            <div class="gallery-item reveal delay-2"><img
+                    src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=700&auto=format&fit=crop"
+                    alt="Work 8" /><span class="img-caption">Untitled VIII</span></div>
+            <div class="gallery-item reveal delay-3"><img
+                    src="https://images.unsplash.com/photo-1579762715118-a6f1d4b934f1?w=700&auto=format&fit=crop"
+                    alt="Work 9" /><span class="img-caption">Untitled IX</span></div>
+        </div>
+    </section>
+
+    <footer class="site-footer reveal">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="footer-logo">A. PELIZZERI</span>
+                <p data-i18n="footer-tagline">Architetto e pittore con sede a Napoli, Italia. Docente di Disegno e Storia dell'Arte.</p>
+            </div>
+            <div class="footer-nav">
+                <h4 data-i18n="footer-contact-h">Contatto</h4>
+                <a href="mailto:info@antoniopelizzeri.it">info@antoniopelizzeri.it</a>
+                <p class="footer-address">Napoli, Italia</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p data-i18n="footer-copyright">&copy; 2026 Antonio Pelizzeri. Tutti i diritti riservati.</p>
+            <p data-i18n="footer-impressum">Impressum</p>
+        </div>
+    </footer>
+
+    <!-- BACK TO TOP -->
+    <button class="back-to-top" id="backTop" aria-label="Back to top">&#8593;</button>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">&times;</button>
+        <img id="lightboxImg" src="" alt="" />
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+
+    <script src="i18n.js"></script>
+    <script src="animations.js"></script>
+    <script>
+        // Dynamic gallery: loads uploaded images from manifest.json
+        (async () => {
+            try {
+                const m = await fetch('images/manifest.json?t=' + Date.now()).then(r => r.ok ? r.json() : null);
+                const imgs = m && m.work && m.work.filter(f => !/^test\./.test(f));
+                if (!imgs || !imgs.length) return;
+                // Replace main gallery grid
+                const grid = document.querySelector('.gallery-grid');
+                if (grid) {
+                    const delays = ['delay-1', 'delay-2', 'delay-3', 'delay-4'];
+                    grid.innerHTML = imgs.map((f, i) => {
+                        const label = f.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                        return `<div class="gallery-item reveal ${delays[i % 4]}" data-lightbox="images/work/${f}">
+            <img src="images/work/${f}" alt="${label}" />
+            <span class="img-caption">${label}</span>
+          </div>`;
+                    }).join('');
+                    // Re-observe dynamically added reveal elements
+                    if (window.revealObserver) {
+                        grid.querySelectorAll('.reveal').forEach(el => window.revealObserver.observe(el));
+                    }
+                }
+                // Replace category card images with first 3 uploaded images
+                document.querySelectorAll('.category-card img').forEach((img, i) => {
+                    if (imgs[i]) img.src = 'images/work/' + imgs[i];
+                });
+            } catch (e) { }
+        })();
+    </script>
+
+</body>
+
+</html>
