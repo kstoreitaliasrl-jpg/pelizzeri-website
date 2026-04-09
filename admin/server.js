@@ -66,7 +66,7 @@ app.use(express.json({ limit: '60mb' }));
 
 // ── CORS (website → admin) ────────────────────────────────────
 app.use((req, res, next) => {
-  const allowed = ['http://localhost:5500','http://127.0.0.1:5500','http://localhost:3000'];
+  const allowed = ['http://localhost:5500','http://127.0.0.1:5500','http://localhost:3000','http://antoniopelizzari.com','https://antoniopelizzari.com','http://www.antoniopelizzari.com','https://www.antoniopelizzari.com'];
   const origin = req.headers.origin;
   if (allowed.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
